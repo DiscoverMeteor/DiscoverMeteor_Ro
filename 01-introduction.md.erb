@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Introducere
 slug: introduction
 date: 0001/01/01
 number: 1
@@ -21,83 +21,81 @@ Dar Meteor face parte dintr-o noua categorie de arhitecturi si tehnologii care c
 
 ### Ce este Meteor?
 
-////
+Meteor este o platforma construita peste Node.js pentru a creea aplicatii web real-time. Este ceea ce sta intre serverul de baze de date a aplicatiei si interfata cu utilizatorul avand girja ca amandoua sa fie sincronizate.
 
-////
+Deoarece este construit pe Node.js, Meteor foloseste Javascript atat in client cat si in server. Si mai mult, Meteor poate sa imparta codul intre cele doua medii.
 
-////
+Rezultatul tuturor acestor lucruri este o platforma care reuseste sa fie foarte puternica si foarte simpla abstractizand foarte usor toate greutatile intampinate in dezvolatrea web.
 
-### Why Meteor?
+### De ce Meteor?
 
-////
+De ce ar trebui sa-ti petreci timpul invatand Meteor si nu alta platforma? Lasand la o parte toate functionalitatile, credem ca se rezuma la un singur lucru: Meteor este usor de invatat.
 
-////
+Mai mult decat alta platforma, Meteor face posibil sa creezi si sa rulezi aplicatii real-time doar in cateva ore. Si daca esti deja familiarizat cu dezvoltarea front-end, nu mai trebuie sa inveti inca un limbaj de programare pentru ca totul ruleaza in Javascript.
 
-////
+Meteor ar putea fi platforma ideala pentru nevoile tale, sau poate nu. Dar din moment ce poti incepe pe parcursul a cateva seri de sfarsit de saptamana, de ce nu ai incerca sa afli cum merge pentru tine?
 
-### Why This Book?
+### De ce aceasta carte?
 
-////
+In ultimele 6 luni, am lucrat la dezvoltarea [Telescope](http://telesc.pe), o aplicatie Meteor open-source cu ajutorul careia oricine poate sa creeze un site social de stiri (vezi [Reddit] (http://reddit.com) sau [Hacker News](http://news.ycombinator.com)), unde oricine poate sa trimita link-uri si sa le voteze.
 
-////
+Am invatat o gramada lucrand la aceasta aplicatie, dar nu a fost intotdeauna usor sa gasim raspunsuri intrebarilor. A trebuit sa punem lucrurile cap la cap din mai multe surse, sau in multe cazuri sa inventam propriile noastre solutii. Deci cu aceasta carte, ne-am dorit sa impartasim toate aceste lectii, si sa creem un ghid pas-cu-pas pentru a crea aplicatii Meteor complete si de la zero.
 
-////
+Aplicatia pe care o construim este o versiune usor modificata de Telescope, pe care o vom numi Microscope. In timp ce o construim, vom aborda toate acele elemente care  constituie o aplicatie Meteor, cum ar fi conturi, colectii, rute si multe altele.
 
-////
+Si dupa ce ai terminat cartea, daca vrei sa mergi mai departe vei putea cu usurinta sa intelegi codul Telescope, deoarce foloseste aceleasi tipare.
 
-### About the Authors
+### Despre autori
 
-////
+In caz de te intrebai cine suntem si de ce ai avea incredere in noi, uite cateva lucruri de aflat despre noi.
 
 <%= image "tom-photo.jpg", "portrait" %>
 
-////
+**Tom Coleman** face parte din [Percolate Studio](http://percolatestudio.com/), un studio web cu accent pe calitate si experienta cu utilizatorul. Este de asemenea co-creatorul [Meteorite](https://github.com/oortcloud/meteorite) si depozitul de pachete Meteor [Atmosphere](http://atmosphere.meteor.com), si de asemenea multe alte aplicatii open-source (cum ar fi [Router](https://github.com/tmeasday/meteor-router)).
 
 <%= image "sacha-photo.jpg", "portrait" %>
 
-////
+**Sacha Greif** a lucrat cu startup-uri cum ar fi [Hipmunk](http://hipmunk.com) si [RubyMotion](http://rubymotion.com) ca web si product designer. Este creatorul [Telescope](http://telesc.pe) si [Sidebar](http://sidebar.io) (bazat pe Telescope), si deasemenea fondatorul [Folyo](http://folyo.me).
 
-### Chapters & Sidebars
+### Capitole & Bare laterale
 
-////
+Ne-am dorit ca aceasta carte sa fie de folos atat utilizatorului incepator cat si celui experimentat, asa ca am impartit capitolele in doua categorii: capitole normale (numerotate de la 1 la 14) si Bare laterale (numerele .5)
 
-////
+Capitolele normale te vor plimba prin pasii construirii aplicatiei, si va incerca sa te faca operational cat mai curand posibil prin a explica masurile cele mai importante fara sa te incarce cu prea mutle detalii.
 
-////
+Pe de alta parte, barele laterale vor merge mai adanc in labirintul Meteor si te va ajuta sa obtii o mai buna intelegere a ceea ce se afla cu adevarat in spatele scenei.
 
-////
+Deci, daca esti un incepator, nu ezita sa treci peste barele laterale la prima citire, si sa le reiei apoi mai tarziu, odata ce te-ai jucat destul cu Meteor.
 
-### Commits & Live Instances
+### Commits & Instante live
 
-////
+Nu este nimic mai rau decat sa parcurgi o carte de programare si sa realizezi brusc ca nu esti sincronizat cu exemplele si nimic nu mai merge asa cum a fost prevazut.
 
-////
+Pentru a preveni asta, am instalat [un depozitar GitHub pentru Microscope](https://github.com/SachaG/Microscope), si deasemenea vom pune la dispozitie legaturi directe pentru commiturile git de fiecare data cand codul s-a schimbat. Aditional, fiecare commit trimite catre o instanta live a aplicatiei a unui commit particular, astfel incat sa poti compara cu copia ta locala. Uite un exemplu cum va arata:
 
 <%= commit "11-2", "Display notifications in the header." %>
 
-////
+### Alte cateva resurse
 
-### A Few Other Resources
+Daca vrei sa afli mai multe despre un anumit aspect al Meteor, [documentatia oficiala Meteor](http://docs.meteor.com/) este un bun punct de plecare.
 
-////
-
-////
+De asemenea recomandam [Stack Overflow](http://stackoverflow.com/questions/tagged/meteor) pentru intrebari. si #meteor [canal IRC](https://webchat.freenode.net/) daca ai nevoie de asistenta in timp real.
 
 <% note do %>
 
-### Do I Need Git?
+### Am nevoie de Git?
 
-////
+In timp ce nu este neaparat necesar a fi familiarizat cu softul Git de control al versiunilor pentru a parcurge cartea, il recomandam cu tarie.
 
-////
+Daca vrei sa te pui la curent cu Git, iti recomandam articolul lui Nick Farina [Git Is Simpler Than You Think] (http://nfarina.com/post/9868516270/git-is-simpler). 
 
-////
+Daca esti incepator Git, de asemenea recomandam aplicatia [GitHub for Mac](http://mac.github.com/), care iti permite sa clonezi si sa gestionezi depozitorii fara a utiliza linia de comanda.
 
 <% end %>
 
-### Getting in Touch
-
-- ////
-- ////
-- ////
-- ////
+### Sa tinem legatura
+- Daca vrei sa tinem legatura, ne poti scrie la [hello@discovermeteor.com](mailto:hello@discovermeteor.com).
+- Aditional, daca gasesti vreo greseala de tipar in carte ne poti comunica prin
+[submitting a bug in this GitHub repo](https://github.com/DiscoverMeteor/book/issues). 
+- Daca ai probleme cu codul Microscope, poti trimite buguri la [submit a bug in Microscope's repository](https://github.com/DiscoverMeteor/Microscope/issues).
+- In final, pentru orice alta intrebare poti lasa un comentariu in panoul din lateral stanga.
