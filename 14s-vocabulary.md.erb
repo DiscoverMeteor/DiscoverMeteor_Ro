@@ -1,90 +1,89 @@
 ---
-title: Meteor Vocabulary
+title: Vocabular Meteor
 slug: meteor-vocabulary
 date: 0014/01/02
 number: 14.5
 sidebar: true
-contents: Review a few common Meteor terms. 
+contents: Termeni Meteor utilizati frecvent. 
 paragraphs: 24
 ---
 
-////
+In aceasta carte vei intilni termeni noi sau cel putin utilizati intr-un sens nou in contextul Meteor. In acest capitol vom explica sensul lor.
 
 #### Client
 
-////
+Cand vorbim despre Client, ne referim la codul executat in "web browser"-ul utilizatorului, indiferent daca acesta e un browser traditional ca Firefox sau Safari, sau ceva mult mai complex ca de exemplu un UIWebView intr-o aplicatioe iPhone.
 
-#### Collection
+#### Colectie
 
-////
+O Colectie Meteor e un grup de date care se sincronizeaza automat intre client si server. O Colectie are un nume (ca de exemplu 'mesaje') si de obicei exista atat in client cat si in server. Desi exista cateva diferente, amandoua au acelasi API derivat din API Mongo.
 
 #### Computation
 
-////
+"Computation" este o portiune de cod care se executa de fiecare data cand se modifica una din sursele reactive de care depinde. Daca aveti o sursa de date reactiva (de exemplu o variabila Session) si vreti sa raspundeti in mod dinamic la schimbarile ei, trebuie sa folositi o "Computation"
 
 #### Cursor
 
-////
- 
+Un cursor e resultatul unei 'query' aplicata unei colectie Mongo. In partea 'client', cursorul nu e doar un simplu tablou de rezultate ci o entitate 'reactiva' care poate fi observata pe masura ce obiectele din colectia respectiva sunt adaugate, sterse sau schimbate.
+
 #### DDP
 
-////
+DDP vine de la 'Distributed Data Protocol' (protocol de distributie de date), termen specific Meteor pentru protocolul utilizat le sincronizare colectiilor si executarea apelurilor Method. DDP este conceput ca un protocol general, pentru a inlocui HTTP in aplicatile in timp real, bazate pe transferul intensiv de date.
 
 #### Deps
 
-////
+Deps e sistemul Meteor responsabil de a asigura reactivitatea aplicatilor. Deps e folosit in spatele cortinei pentru pastra automat sincronizarea dintre HTML si modelul de date.
 
 #### Document
 
-////
+Mongo e o baza de date orientata document. Din acest motiv obiectele provenite din colectii se cheama "documente". Sunt de fapt simple obiecte JavaScript (cu exceptia faptului ca nu pot contine functii) cu o singura proprietate speciala : '_id'. Meteor foloseste aceasta proprietate pentru a identificat obiectele in cadrul protocolului DDP.
 
 #### Helpers
 
-////
+Cand un 'template' are nevoie sa afiseze ceva mai complicat decat o simpla proprietate de document, se poate folosi de un helper, o functie ajutatoare pentru afisaj.
 
 #### Latency Compensation
 
-////
+Este o tehnica care simuleaza apelurile Method in client, pentru a evita efectul de intarziere cat timp e asteptat raspunsul serverului.
 
 #### Method
 
-////
+O Metoda Meteor este un apel de functie la distanta executat de catre client spre server, care are avantajul de a lua in considerare schimbarile in colectie si care permite Latency Compensation.
 
 #### MiniMongo
 
-////
+Colectile implementate in client sunt o baza de date aflata in memorie cu un API compatibil Mongo. Biblioteca care permite acest comportament se cheama "MiniMongo", pentru a indica ca e de fapt o versiune redusa de Mongo care se executa in intregime in memorie.
 
 #### Package
 
-////
+Un pachet Meteor poate contine
+  1. Cod JavaScript executabil in server.
+  2. Cod JavaScript executabil in client.
+  3. Instructiuni despre cum sa fie prelucrate resursele (de exemplu SASS in CSS)
+  4. Resurse
 
-  1. ////
-  2. ////
-  3. ////
-  4. ////
+Un pachet e ca o super-biblioteca. Meteor contine o gama larga de pachete de baza. Exista de asemenea [Atmosphere](http://atmosphere.meteor.com), o colectie de pachete oferite de comunitatea din jurul proiectului Meteor.
 
-////
+#### Publicatie
 
-#### Publication
-
-////
+O publicatie e un set de date, adaptat la fiecare utilizator care se inscrie la respectiva publicatie. Publicatiile se configureaza pe server.
 
 #### Server
 
-////
+Un server Meteor e de fapt un server HTTP si DDP bazat pe tehnologia node.js. Este compus din toate bibliotecile Meteor plus codul vostru JavaScript, partea server. Cand lansati un server Meteor, acesta se conecteaza la o baza de date Mongo (care se auto-initializeaza pe parcurs).
 
-#### Session
+#### Session / Sesiune
 
-////
+Session / Sesiune in Meteor se refera la o sursa de date reactiva, existenta in partea client, care poate fi folosita pentru a determina starea utilizatorului la un anumit moment dat.
 
 #### Subscription
 
-////
+O subscriere e o conexiune a clientului la o publicatie. Subscrierea e o bucata de code executat in browser care interactioneaza cu o publicatie aflata pe server cu scopul de a pastra datele sincronizate.
 
-#### Template
+#### Template / Sablon
 
-////
+Sablon e o metoda de a genera cod HTML in JavaScript. De baza, Meteor foloseste Handlebars, un sistem de sabloane fara logica incorporata. In viitor sunt planuite si alte sisteme de sabloane.
 
 #### Template Data Context
 
-////
+Cand un sablon se afiseaza, se foloseste de un obiect JavaScript care ii furnizeaza datele necesare. De obicei acesta e un simplu obiect JavaScript (POJO) sau un document dintr-o colectie, desi pot fi cazuri in care obiectul e mai complicat si poate contine functii.
