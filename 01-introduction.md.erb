@@ -37,65 +37,66 @@ Meteor ar putea fi platforma ideală pentru nevoile tale, sau poate nu. Dar din 
 
 ### De ce această carte?
 
-În ultimele 6 luni, am lucrat la dezvoltarea [Telescope](http://telesc.pe), o aplicatie Meteor open-source cu ajutorul careia oricine poate sa creeze un site social de stiri (vezi [Reddit] (http://reddit.com) sau [Hacker News](http://news.ycombinator.com)), unde oricine poate sa trimita link-uri si sa le voteze.
+În ultimele 6 luni, am lucrat la dezvoltarea [Telescope](http://telesc.pe), o aplicație Meteor open-source cu ajutorul căreia oricine poate să creeze un site social de știri (vezi [Reddit] (http://reddit.com) sau [Hacker News](http://news.ycombinator.com)), unde oricine poate să adauge link-uri și să le voteze.
 
-Am invatat o gramada lucrand la aceasta aplicatie, dar nu a fost intotdeauna usor sa gasim raspunsuri intrebarilor. A trebuit sa punem lucrurile cap la cap din mai multe surse, sau in multe cazuri sa inventam propriile noastre solutii. Deci cu aceasta carte, ne-am dorit sa impartasim toate aceste lectii, si sa creem un ghid pas-cu-pas pentru a crea aplicatii Meteor complete si de la zero.
+Am învățat o gramadă lucrând la această aplicație, dar nu a fost întotdeauna ușor să găsim răspunsuri întrebărilor. A trebuit să punem lucrurile cap la cap din mai multe surse, sau în multe cazuri să inventăm propriile noastre soluții. Deci cu această carte, ne-am dorit să împărtășim toate aceste lecții, și să creem un ghid pas-cu-pas pentru a crea aplicații Meteor complete și de la zero.
 
-Aplicatia pe care o construim este o versiune usor modificata de Telescope, pe care o vom numi Microscope. In timp ce o construim, vom aborda toate acele elemente care  constituie o aplicatie Meteor, cum ar fi conturi, colectii, rute si multe altele.
+Aplicația pe care o construim este o versiune ușor modificată de Telescope, pe care o vom numi Microscope. În timp ce o construim, vom aborda toate acele elemente care constituie o aplicație Meteor, cum ar fi conturi, colecții, rute și multe altele.
 
-Si dupa ce ai terminat cartea, daca vrei sa mergi mai departe vei putea cu usurinta sa intelegi codul Telescope, deoarce foloseste aceleasi tipare.
+Și după ce ai terminat cartea, dacă vrei să mergi mai departe vei putea cu ușurință să înțelegi codul Telescope, deoarece folosește aceleași tipare.
 
 ### Despre autori
 
-In caz de te intrebai cine suntem si de ce ai avea incredere in noi, uite cateva lucruri de aflat despre noi.
+În caz de te intrebai cine suntem și de ce ai avea încredere in noi, uite câteva lucruri de aflat despre noi.
 
 <%= image "tom-photo.jpg", "portrait" %>
 
-**Tom Coleman** face parte din [Percolate Studio](http://percolatestudio.com/), un studio web cu accent pe calitate si experienta cu utilizatorul. Este de asemenea co-creatorul [Meteorite](https://github.com/oortcloud/meteorite) si depozitul de pachete Meteor [Atmosphere](http://atmosphere.meteor.com), si de asemenea multe alte aplicatii open-source (cum ar fi [Router](https://github.com/tmeasday/meteor-router)).
+**Tom Coleman** face parte din [Percolate Studio](http://percolatestudio.com/), un studio web cu accent pe calitate și experiența cu utilizatorul. Este de asemenea co-creatorul [Meteorite](https://github.com/oortcloud/meteorite) și depozitul de pachete Meteor [Atmosphere](http://atmosphere.meteor.com), și de asemenea multe alte aplicații open-source (cum ar fi [Router](https://github.com/tmeasday/meteor-router)).
 
 <%= image "sacha-photo.jpg", "portrait" %>
 
-**Sacha Greif** a lucrat cu startup-uri cum ar fi [Hipmunk](http://hipmunk.com) si [RubyMotion](http://rubymotion.com) ca web si product designer. Este creatorul [Telescope](http://telesc.pe) si [Sidebar](http://sidebar.io) (bazat pe Telescope), si deasemenea fondatorul [Folyo](http://folyo.me).
+**Sacha Greif** a lucrat cu startup-uri cum ar fi [Hipmunk](http://hipmunk.com) și [RubyMotion](http://rubymotion.com) ca web și product designer. Este creatorul [Telescope](http://telesc.pe) și [Sidebar](http://sidebar.io) (bazat pe Telescope), și deasemenea fondatorul [Folyo](http://folyo.me).
 
-### Capitole & Bare laterale
+### Capitole & Secțiuni extra
 
-Ne-am dorit ca aceasta carte sa fie de folos atat utilizatorului incepator cat si celui experimentat, asa ca am impartit capitolele in doua categorii: capitole normale (numerotate de la 1 la 14) si Bare laterale (numerele .5)
+Ne-am dorit ca această carte să fie de folos atât utilizatorului începător cât și celui experimentat, asa că am împărțit capitolele în doua categorii: capitole normale (numerotate de la 1 la 14) și secțiuni extra (numerotate cu .5)
 
-Capitolele normale te vor plimba prin pasii construirii aplicatiei, si va incerca sa te faca operational cat mai curand posibil prin a explica masurile cele mai importante fara sa te incarce cu prea mutle detalii.
+Capitolele normale te vor plimba prin pașii construirii aplicației, și va încerca să te facă operațional cât mai curând posibil prin a explica noțiunile cele mai importante fără să te încarce cu prea multe detalii.
 
-Pe de alta parte, barele laterale vor merge mai adanc in labirintul Meteor si te va ajuta sa obtii o mai buna intelegere a ceea ce se afla cu adevarat in spatele scenei.
+Pe de altă parte, secțiunile extra vor merge mai adânc în "mațele" lui Meteor, și te vor ajuta să obții o mai bună înțelegere a ceea ce se află cu adevărat în spatele scenei.
 
-Deci, daca esti un incepator, nu ezita sa treci peste barele laterale la prima citire, si sa le reiei apoi mai tarziu, odata ce te-ai jucat destul cu Meteor.
+Deci, dacă ești un începător, nu ezita să treci peste secțiunile extra la prima citire, și să le reiei apoi mai târziu, odată ce te-ai jucat destul cu Meteor.
 
-### Commits & Instante live
+### Commituri & Instanțe live
 
-Nu este nimic mai rau decat sa parcurgi o carte de programare si sa realizezi brusc ca nu esti sincronizat cu exemplele si nimic nu mai merge asa cum a fost prevazut.
+Nu este nimic mai rău decât să parcurgi o carte de programare și să realizezi brusc că nu ești sincronizat cu exemplele și nimic nu mai merge așa cum a fost prevăzut.
 
-Pentru a preveni asta, am instalat [un depozitar GitHub pentru Microscope](https://github.com/SachaG/Microscope), si deasemenea vom pune la dispozitie legaturi directe pentru commiturile git de fiecare data cand codul s-a schimbat. Aditional, fiecare commit trimite catre o instanta live a aplicatiei a unui commit particular, astfel incat sa poti compara cu copia ta locala. Uite un exemplu cum va arata:
+Pentru a preveni asta, am creat [un repository GitHub pentru Microscope](https://github.com/SachaG/Microscope), și de asemenea vom pune la dispoziție legături directe pentru commiturile git de fiecare data când codul s-a schimbat. Adițional, fiecare commit trimite către o instanță live a aplicației a unui commit particular, astfel încât să poți compara cu copia ta locala. Iată un exemplu:
 
 <%= commit "11-2", "Display notifications in the header." %>
 
-### Alte cateva resurse
+### Alte resurse
 
-Daca vrei sa afli mai multe despre un anumit aspect al Meteor, [documentatia oficiala Meteor](http://docs.meteor.com/) este un bun punct de plecare.
+Daca vrei să afli mai multe despre un anumit aspect al Meteor, [documentația oficială Meteor](http://docs.meteor.com/) este un bun punct de plecare.
 
-De asemenea recomandam [Stack Overflow](http://stackoverflow.com/questions/tagged/meteor) pentru intrebari. si #meteor [canal IRC](https://webchat.freenode.net/) daca ai nevoie de asistenta in timp real.
+De asemenea recomandăm [Stack Overflow](http://stackoverflow.com/questions/tagged/meteor) pentru întrebări, și [canalul IRC #meteor](https://webchat.freenode.net/) daca ai nevoie de asistență în timp real.
 
 <% note do %>
 
 ### Am nevoie de Git?
 
-In timp ce nu este neaparat necesar a fi familiarizat cu softul Git de control al versiunilor pentru a parcurge cartea, il recomandam cu tarie.
+Chiar dacă ce nu este neapărat necesar a fi familiarizat cu softul de versionare Git pentru a parcurge cartea, îl recomandam cu tărie.
 
-Daca vrei sa te pui la curent cu Git, iti recomandam articolul lui Nick Farina [Git Is Simpler Than You Think] (http://nfarina.com/post/9868516270/git-is-simpler). 
+Dacă vrei să te pui la curent cu Git, îți recomandăm articolul lui Nick Farina [Git Is Simpler Than You Think] (http://nfarina.com/post/9868516270/git-is-simpler). 
 
-Daca esti incepator Git, de asemenea recomandam aplicatia [GitHub for Mac](http://mac.github.com/), care iti permite sa clonezi si sa gestionezi depozitorii fara a utiliza linia de comanda.
+Dacă ești începător Git, de asemenea recomandăm aplicația [GitHub for Mac](http://mac.github.com/), care îți permite să clonezi și să gestionezi repository-uri fără a utiliza linia de comandă.
 
 <% end %>
 
-### Sa tinem legatura
-- Daca vrei sa tinem legatura, ne poti scrie la [hello@discovermeteor.com](mailto:hello@discovermeteor.com).
-- Aditional, daca gasesti vreo greseala de tipar in carte ne poti comunica prin
-[submitting a bug in this GitHub repo](https://github.com/DiscoverMeteor/book/issues). 
-- Daca ai probleme cu codul Microscope, poti trimite buguri la [submit a bug in Microscope's repository](https://github.com/DiscoverMeteor/Microscope/issues).
-- In final, pentru orice alta intrebare poti lasa un comentariu in panoul din lateral stanga.
+### Contact
+
+- Ne poți scrie la [hello@discovermeteor.com](mailto:hello@discovermeteor.com).
+- Adițional, dacă găsești vreo greșeală de tipar în carte ne poți comunica prin
+[adăugarea unui issue pe repository-ul de Github](https://github.com/DiscoverMeteor/book/issues). 
+- Dacă ai probleme cu codul Microscope, poți trimite buguri la [repository-ul lui Microscope](https://github.com/DiscoverMeteor/Microscope/issues).
+- În final, pentru orice altă întrebare poți lăsa un comentariu în panoul lateral al acestei aplicații.
