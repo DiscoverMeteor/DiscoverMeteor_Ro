@@ -1,49 +1,49 @@
 ---
-title: Deployment
+title: Lansarea
 slug: deploying
 date: 0002/01/02
 number: 2.5
 sidebar: true
-contents: Learn how to deploy on Meteor.com.|Learn how to deploy on Modulus.|Learn how to deploy on your own server using Meteor Up.
+contents: Află cum să lansezi o aplicație pe Meteor.com.|Află cum să lansezi pe Modulus.|Află cum să lansezi o aplicație pe propriul server folosind Meteor Up.
 paragraphs: 46
 ---
 
-////
+Unii dezvoltatori preferă să lucreze în liniște la un proiect până totul este absolut perfect, în timp ce alții preferă să îl arate lumii cât mai devreme posibil.
 
-////
+Dacă ești din prima categorie și ai prefera să dezvolți doar local deocamdată, ești liber să sari peste acest capitol. Dacă ești în cealaltă categorie, și vrei sa înveți cum se lansează aplicația ta Meteor online, acesta este capitolul pe care trebuie să îl citești.
 
-////
+O să învățăm cum să lansăm o aplicație Meteor în câteva moduri diferite. Ești liber să le folosești pe fiecare în orice stadiu al procesului de dezvoltare, și indiferent dacă lucrezi pe Microscope sau altă aplicație Meteor. Să începem!
 
 <% note do %>
 
-### Introducing Sidebars
+### Introducere capitole extra
 
-////
+Acest capitol este **extra**. Capitolele extra intră mai adânc pe anumite subiecte Meteor, în mod independent față de parcursul normal al cărții.
 
-////
+Dacă ai prefera să continui să dezvolți Microscope, poți să sari peste acest capitol și să te întorci la el mai târziu.
 
 <% end %>
 
-### Deploying On Meteor
+### Lansarea pe Meteor.com
 
-////
+Lansarea pe un subdomeniu Meteor (de exemplu `http://aplicatia-mea.meteor.com`) este cea mai ușoară opțiune, și prima pe care o vom încerca. Aceasta poate să fie o opțiune simplă ca să arăți aplicația altor persoane în faza ei incipientă, sau să stabilești un server de dezvoltare intermediară.
 
-////
+Lansarea pe Meteor.com este destul de simplă. Nu trebuie decât să deschizi un terminal, să te duci la directorul în care se află aplicația ta Meteor, și să scrii:
 
 ~~~bash
-$ meteor deploy myapp.meteor.com
+$ meteor deploy aplicatia-mea.meteor.com
 ~~~
 
-////
+Bineînțeles, va trebui să înlocuiești "aplicatia-mea" cu numele dorit, preferabil unul care nu se află deja în uz. Dacă numele este luat, Meteor s-ar putea să îți ceară o parolă. Dacă se întâmplă asta, pur și simplu oprește operația folosind combinația `ctrl+c` și încearcă din nou cu alt nume.
 
-////
+Dacă totul merge cum trebuie, după câteva secunde o să poți să accesezi aplicația ta la `http://aplicatia-mea.meteor.com`.
 
-### Password Protection
+### Protecția cu parolă
 
-////
+Implicit, subdomeniile Meteor nu sunt restricționate în niciun fel. Oricine poate să folosească orice domeniu, și să suprascrie orice aplicație deja existentă. Așa că probabil o să vrei să adaugi o parolă subdomeniului tău folosind opțiunea `-p`:
 
 ~~~~bash
-$ meteor deploy myapp.meteor.com -p
+$ meteor deploy aplicatia-mea.meteor.com -p
 ~~~~
 
 ////
