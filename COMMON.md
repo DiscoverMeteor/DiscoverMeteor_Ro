@@ -1,30 +1,29 @@
+Computation = Computație
 
-Computation = Computation // Termen dificil, eventual : "Evaluare" ?
+Client-side = Pe client
 
-client-side = in client // ?
-
-cursor (Mongo) = cursor
+Cursor (Mongo) = cursor
 
 Deps = Deps
 
 DDP = DDP
 
-helpers = helpers  // Termen dificil de tradus
+Helpers = Helpers (Metode ajutătoare)
 
-Latency Compensation = Latency Compensation
+Latency Compensation = Compensare pentru latență
 
-query = query
+Query = Cerere
 
-Method =- Metoda  // sau termenul englez "Method" ?
+Method = Metoda / Funcție / Procedură
 
-reactive data source = sursa reactiva, sursa reactiva de date 
+Reactive data source = Sursa reactivă, Sursa reactivă de date 
 
-package = pachet
+Package = Pachet
 
-publication = publicatie
+Publication = Publicație
 
-server-side = in server // ?
+Server-side = Pe server
 
-subscription = subscriere, inscriere
+Subscription = Subscripție
 
-Template = sablon   // sau termenul englez "Template" ? 
+Template = Template (Șablon)

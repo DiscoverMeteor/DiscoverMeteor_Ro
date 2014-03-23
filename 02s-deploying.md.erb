@@ -1,124 +1,124 @@
 ---
-title: Deployment
+title: Lansarea
 slug: deploying
 date: 0002/01/02
 number: 2.5
 sidebar: true
-contents: Learn how to deploy on Meteor.com.|Learn how to deploy on Modulus.|Learn how to deploy on your own server using Meteor Up.
+contents: Află cum să lansezi o aplicație pe Meteor.com.|Află cum să lansezi pe Modulus.|Află cum să lansezi o aplicație pe propriul server folosind Meteor Up.
 paragraphs: 46
 ---
 
-////
+Unii dezvoltatori preferă să lucreze în liniște la un proiect până totul este absolut perfect, în timp ce alții preferă să îl arate lumii cât mai devreme posibil.
 
-////
+Dacă ești din prima categorie și ai prefera să dezvolți doar local deocamdată, ești liber să sari peste acest capitol. Dacă ești în cealaltă categorie, și vrei sa înveți cum se lansează aplicația ta Meteor online, acesta este capitolul pe care trebuie să îl citești.
 
-////
+O să învățăm cum să lansăm o aplicație Meteor în câteva moduri diferite. Ești liber să le folosești pe fiecare în orice stadiu al procesului de dezvoltare, și indiferent dacă lucrezi pe Microscope sau altă aplicație Meteor. Să începem!
 
 <% note do %>
 
-### Introducing Sidebars
+### Introducere capitole extra
 
-////
+Acest capitol este **extra**. Capitolele extra intră mai adânc pe anumite subiecte Meteor, în mod independent față de parcursul normal al cărții.
 
-////
+Dacă ai prefera să continui să dezvolți Microscope, poți să sari peste acest capitol și să te întorci la el mai târziu.
 
 <% end %>
 
-### Deploying On Meteor
+### Lansarea pe Meteor.com
 
-////
+Lansarea pe un subdomeniu Meteor (de exemplu `http://aplicatia-mea.meteor.com`) este cea mai ușoară opțiune, și prima pe care o vom încerca. Aceasta poate să fie o opțiune simplă ca să arăți aplicația altor persoane în faza ei incipientă, sau să stabilești un server de dezvoltare intermediară.
 
-////
+Lansarea pe Meteor.com este destul de simplă. Nu trebuie decât să deschizi un terminal, să te duci la directorul în care se află aplicația ta Meteor, și să scrii:
 
 ~~~bash
-$ meteor deploy myapp.meteor.com
+$ meteor deploy aplicatia-mea.meteor.com
 ~~~
 
-////
+Bineînțeles, va trebui să înlocuiești "aplicatia-mea" cu numele dorit, preferabil unul care nu se află deja în uz. Dacă numele este luat, Meteor s-ar putea să îți ceară o parolă. Dacă se întâmplă asta, pur și simplu oprește operația folosind combinația `ctrl+c` și încearcă din nou cu alt nume.
 
-////
+Dacă totul merge cum trebuie, după câteva secunde o să poți să accesezi aplicația ta la `http://aplicatia-mea.meteor.com`.
 
-### Password Protection
+### Protecția cu parolă
 
-////
+Implicit, subdomeniile Meteor nu sunt restricționate în niciun fel. Oricine poate să folosească orice domeniu, și să suprascrie orice aplicație deja existentă. Așa că probabil o să vrei să adaugi o parolă subdomeniului tău folosind opțiunea `-p`:
 
 ~~~~bash
-$ meteor deploy myapp.meteor.com -p
+$ meteor deploy aplicatia-mea.meteor.com -p
 ~~~~
 
-////
+Meteor îți va cere o parolă, iar pe viitor această parolă va fi necesară de fiecare dată când vrei să lansezi o nouă variantă a aplicației.
 
-////
+Poți consulta [documentația oficială Meteor](http://docs.meteor.com/#deploying) pentru mai multe informații legate de subiecte precum accesarea bazei de date a instanței aplicației tale, sau configurarea unui domeniu.
 
-### Deploying On Modulus
+### Lansarea pe Modulus
 
-////
+[Modulus](https://modulus.io/) este o opțiune foarte bună pentru lansarea aplicațiilor NodeJS. Este unul din puținele PaaS (platform-as-a-service) care oferă suport oficial pentru Meteor, și deja există oameni care îl folosesc pentru aplicații Meteor de producție.
 
 <% note do %>
 
 ### Demeteorizer
 
-////
+Modulus au lansat o unealtă open-source numită [demeteorizer](https://github.com/onmodulus/demeteorizer) care îți convertește aplicația Meteor într-o aplicație standard NodeJS.
 
 <% end %>
 
-////
+Poți începe prin a îți [crea un cont](https://modulus.io/register). Pentru a lansa o aplicație pe Modulus, mai întâi va trebui să instalăm unealta lor din linia de comandă:
 
 ~~~bash
 $ npm install -g modulus
 ~~~
 
-////
+Și să ne autentificăm cu:
 
 ~~~bash
 $ modulus login
 ~~~
 
-////
+Acum vom crea un proiect nou Modulus (poți să faci asta și prin panoul lor de administrare online):
 
 ~~~bash
 $ modulus project create
 ~~~
 
-////
+Următorul pas este să creezi o bază de date MongoDB pentru aplicația noastră. Putem să folosim una [tot de la Modulus](https://modulus.io/codex/database/getting_started), de la [MongoHQ](https://www.mongohq.com/), sau de la orice alt provider cloud pentru baze de date MongoDB.
 
-////
+Odată ce am creat baza de date, putem să obținem `MONGO_URL`-ul acesteia din panoul de administrare online Modulus (în Dashboard > Databases > Select your database > Administration), pe care să îl configurăm aplicației în felul următor:
 
 ~~~bash
 $ modulus env set MONGO_URL "mongodb://<user>:<pass>@mongo.onmodulus.net:27017/<database_name>"
 ~~~
 
-////
+Este momentul să lansăm aplicația. Nu avem nevoie decât de o singură comandă:
 
 ~~~bash
 $ modulus deploy
 ~~~
 
-////
+Am lansat o aplicație cu succes pe Modulus. Puteți consulta [documentația Modulus](https://modulus.io/codex/projects) pentru mai multe informații legate de accesarea log-urilor, configurarea unui domeniu, și SSL.
 
 ### Meteor Up
 
-////
+Cu toate că soluții cloud noi apar în fiecare zi, adesea acestea vin cu o suită de probleme și limitări. În ziua de azi, lansarea unei aplicații pe propriul tău server rămâne în continuare cea mai bună metodă de a pune o aplicație Meteor în producție. Singura problemă este că lansarea manuală nu este așa de simplă, mai ales dacă îți dorești ceva de robust, de producție.
 
-////
+[Meteor Up](https://github.com/arunoda/meteor-up) (sau `mup` pe scurt) este o inițiativă de a repara această problemă, cu o aplicație de linie de comandă care se ocupă de lansare șî configurare în locul tău. Să vedem care este procesul de lansare a lui Microscope folosind Meteor Up.
 
-////
+Înainte de orice altceva, avem nevoie de un server pe care să lansăm. Noi recomandăm ori [Digital Ocean](http://digitalocean.com), care pornește de la $5 pe lună, sau [AWS](http://aws.amazon.com/), care oferă instanțe gratuite de tip Micro (vei întâmpina probleme de scalabilitate, dar ar trebui să ajungă dacă dorești doar să te joci cu Meteor Up).
 
-////
+Oricare variantă ai alege, ar trebui sa obții trei lucruri: adresa IP a serverului, un nume de utilizator (de obicei `root` sau `ubuntu`), și o parolă. Să le păstrezi într-un loc sigur, o să avem nevoie de ele în curând!
 
-### Initializing Meteor Up
+### Inițializarea lui Meteor Up
 
-////
+Pentru început, o să instalăm Meteor Up prin `npm` folosind următoarea comandă:
 
 ~~~bash
 $ npm install -g mup
 ~~~
 
-////
+Apoi o să creem un folder separat, special care va conține setările noastre Meteor Up pentru un anumit tip de lansare. O să folosim un folder separat din două motive: în primul rând, este indicat să eviți includerea credențialelor private în repository-ul de Git, mai ales dacă lucrezi pe cod sursă public.
 
-////
+În al doilea rând, prin folosirea directoarelor separate multiple, putem să gestionăm în paralel configurările Meteor Up a mai multe lansări separate. Acest aspect va fi folositor pentru lansarea unei înstanțe de producție și intermediară, de exemplu.
 
-////
+Hai să creem un director nou și să îl folosim pentru a inițializa un nou proiect Meteor Up:
 
 ~~~bash
 $ mkdir ~/microscope-deploy
@@ -128,19 +128,19 @@ $ mup init
 
 <% note do %>
 
-### Sharing with Dropbox
+### Partajarea cu Dropbox
 
-////
+O metodă simplă ca să împarți setările de lansare ale aplicației tale cu restul echipei tale este să creezi folderul de configurare în interiorul folderului de Dropbox, sau orice alt serviciu asemănător.
 
 <% end %>
 
-### Meteor Up Configuration
+### Configurarea lui Meteor Up
 
-////
+Când inițializezi un proiect nou, Meteor Up va crea două fișiere: `mup.json` și `settings.json`.
 
-////
+`mup.json` va conține toate setările legate de lansare, în timp ce `settings.json` va conține toate setările legate de aplicație (token-uri OAuth, pentru servicii de analytics, etc.).
 
-////
+Următorul pas este să configurezi fișierul `mup.json`. Acesta este fișierul `mup.json` implicit generat de `mup init`, și tot ce trebuie să faci este să înlocuiești spațiile corespunzătoare:
 
 ~~~js
 {
@@ -167,52 +167,52 @@ $ mup init
 ~~~
 <%= caption "mup.json" %>
 
-////
+Hai să mergem prin fiecare din setările acestea.
 
-**Server Authentication**
+**Autentificarea pe server**
 
-////
+Vei observa că Meteor Up suportă autentificare prin parolă si cheie privată (PEM), așa că poate fi folosit cu aproape orice serviciu cloud.
 
-////
+**Notă importantă**: dacă alegi să folosești autentificare pe bază de parolă, ai grijă să instalezi `sshpass` mai întâi ([vezi ghidul acesta](https://gist.github.com/arunoda/7790979)).
 
-**MongoDB Configuration**
+**Configurare MongoDB**
 
-////
+Următorul pas este să configurăm baza de date MongoDB pentru aplicația ta. Recomandăm să folosești [MongoHQ](https://www.mongohq.com/home) sau orice alt provider cloud pentru MongoDB, deoarece aceștia oferă suport profesional și unelte avansate de gestionare.
 
-////
+Dacă te hotărăști să folosești MongoHQ, setează `setupMongo` ca `false` și adaugă variabila `MONGO_URL` în obiectul de `env` din `mup.json`. Dacă te hotărăști să folosești MongoDB cu Meteor Up, pur și simplu setează `setupMongo` ca `true` și Meteor Up se va ocupa de tot restul.
 
-**Meteor App Path**
+**Calea aplicației Meteor**
 
-////
+Deoarece configurarea Meteor Up se află într-un alt director, avem nevoie să îi indicăm lui Meteor Up unde se află aplicația folosind proprietatea `app`. Pur și simplu adaugă calea locală completă, pe care o poți obține rulând comanda `pwd` din linia de comandă când te afli în folderul aplicației.
 
-**Environment Variables**
+**Variabile de mediu de dezvoltare**
 
-////
+Poți specifica toate variabilele de mediu ale aplicației tale (cum ar fi `ROOT_URL`, `MAIL_URL`, `MONGO_URL`, etc.) înăuntrul obiectului `env`.
 
-### Setting Up and Deploying
+### Configurarea serverului și lansarea
 
-////
+Înainte să putem să lansăm aplicația, trebuie să configurăm serverul ca să fie pregătit să găzduiască aplicații Meteor. Meteor Up încapsulează acest proces complicat într-o singură comandă simplă!
 
 ~~~bash
 $ mup setup
 ~~~
 
-////
+Aceasta va dura câteva minute depinzând de performanța serverului tău și viteza de rețea. Dacă setup-ul se finalizează cu succes, putem in final să lansăm aplicația cu:
 
 ~~~bash
 $ mup deploy
 ~~~
 
-////
+Această comandă o să îți împacheteze aplicația, și o să o lanseze pe serverul pe care tocmai l-am configurat.
 
-### Displaying Logs
+### Afișarea log-urilor
 
-////
+Log-urile sunt destul de importante și Meteor Up oferă o interfață simplă ca să le vizualizăm prin emularea comenzii `tail -f`. Pur și simplu rulezi:
 
 ~~~bash
 $ mup logs -f
 ~~~
 
-////
+Cu asta se încheie privirea noastră de ansamblu asupra lui Meteor Up. Pentru mai multe informații, recomandăm vizitarea [repository-ului lui Meteor Up de pe GitHub](https://github.com/arunoda/meteor-up).
 
-////
+Aceste trei metode de lansare a aplicațiilor Meteor ar trebui să fie suficiente pentru majoritatea cazurilor. Bineînțeles, știm că unii din voi preferă să fie în control deplin și să își configureze propriul server Meteor de la zero. Dar acesta este un subiect pentru altă zi… sau poate o întreagă altă carte!
