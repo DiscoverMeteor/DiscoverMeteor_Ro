@@ -1,3 +1,5 @@
+Block helpers = Blocuri ajutătoare
+
 Computation = Computație
 
 Client-side = Pe client
