@@ -3,15 +3,15 @@ title: Templates
 slug: templates
 date: 0003/01/01
 number: 3
-contents: Learn about Meteor's templating language, Handlebars.|Create your first three templates.|Learn how Meteor managers work.|Get a basic prototype working with static data.
+contents: Invata limbajul de template, Handlebars.|Creaza primele tale template.|Invata cum functioneaza manageri Meteor.|Primul prototip cu date statice.
 paragraphs: 46
 ---
 
-////
+Pentru a invata mai usor Meteor, am adoptat un abordare "din exterior spre interior". Adica la inceput vom contrui o simpla pagina HTML/JavaScript iar mai tarziu vom dezvolta mecanica interna a aplicatiei.
 
-////
+Din aceasta cauza in acest capitol ne vom interesa doar cu ce se intampla in interiorul directorului `/client`.
 
-////
+Să creăm un fisier `main.html` in directorul `/client` si sa punem inauntru codul urmator :
 
 ~~~html
 <head>
@@ -32,25 +32,25 @@ paragraphs: 46
 ~~~
 <%= caption "client/main.html" %>
 
-////
+Acesta va fi template-ul principal al aplicatiei. Dupa cum poti vedea, e doar HTML cu exceptia tagului `{{> postsList}}`, care e un punct de inserţie a template-ului `postsList`, dupa cum vom vedea. 
 
 ### Meteor Templates
 
-////
+In sine, un site de stiri e compus din articole organizate in liste. Si exact asa vom organiza template-le noastre.
 
-////
+Să creăm un director `views` in `/client`. Aici vom pune toate template-le aplicatiei; si ca sa fie totul bine aranjat, vom crea inca un director `/posts` in `/views`, doar pentru template-ele legate de articole.
 
 <% note do %>
 
-### Finding Files
+### Descoperirea fisierelor
 
-////
+Meteor e nemaipomenit la descoperirea fisierelor! Nu conteaza unde le pui in directorul `/client`, Meteor le va gasi si le va compila cum trebuie. Avantajul e ca nu va trebui niciodata sa introduci de mana calea spre fisierele JavaScript sau CSS.
 
-////
+Asta inseamna ca ai putea foarte bine sa pui toate fisierele in acelasi director sau tot codul in acelasi fisier. Dar oricum Meteor va compila totul intr-un singur fisier minificat, asa ca ar fi mai bine sa pastram fisierele bine organizate. 
 
 <% end %>
 
-////
+Suntem gata pentru al doilea template. In interiorul directorului `client/views/posts`, creaza un fisier `posts_list.html`:
 
 ~~~html
 <template name="postsList">
@@ -63,7 +63,7 @@ paragraphs: 46
 ~~~
 <%= caption "client/views/posts/posts_list.html" %>
 
-////
+Si de asemenea un alt fisier `post_item.html`: 
 
 ~~~html
 <template name="postItem">
@@ -76,55 +76,55 @@ paragraphs: 46
 ~~~
 <%= caption "client/views/posts/post_item.html" %>
 
-////
+Atentie la atributul `name="postsList"` din template. Acesta e numele care va fi folosit de Meteor pentru a determina care template va fi folosit in HTML.
 
-////
+E timpul sa prezentam sistemul de template al Meteor-ului, [Handlebars](http://handlebarsjs.com). Handlebars e doar HTML cu trei lucruri in plus: *partialele*, *expresiile* si *blocurile ajutătoare*.
 
-////
+*Partialele* folosesc sintaxa `{{> templateName}}` pentru a anunta Meteor sa inlocuiasca partialul cu un template cu acelasi nume (in cazul de fata `postItem`).
 
-////
+*Expresiile* de genul `{{title}}` sau se refera la o proprietate a obiectului curent sau la valoarea intoarsa de o functie ajutatoare a template-ului. Aceste functii sunt definite in managerul fiecarui template (dar mai multe despre acest subiect mai tarziu).
 
-////
+In sfarsit, *blocurile ajutătoare* sunt tag-uri speciale care dirijeaza fluxul de executie a template-ului. De exemplu: `{{#each}}…{{/each}}` sau `{{#if}}…{{/if}}`.
 
 <% note do %>
 
-### Going Further
+### In profunzime
 
-////
+Poti consulta [situl oficial Handlebars](http://handlebarsjs.com) sau [acets tutorial foarte util](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/)  daca vrei sa inveti mai multe despre Handlebars.
 
 <% end %>
 
-////
+Dupa toate acestea, putem intelege usor ce se intampla aici.
 
-////
+Pentru inceput, in template-ul `postsList`, parcurgem un obiect `posts` cu blocul ajutător `{{#each}}…{{/each}}`. La fiecare iteratie includem template-ul  `postItem`.
 
-////
+De unde vine acest obiect `posts`? Buna intrebare! E de fapt o metoda ajutatoare a template-ului si o vom defini cand ne vom ocupa de template managers.
 
-////
+Template-ul `postItem` e destul de simplu. Foloseste doar trei expresii:   `{{url}}` si `{{title}}` amandoua intorc proprietati ale documentului iar `{{domain}}` cheama o metoda ajutatoare.
 
-////
+Am mentinat  "metodele ajutoatoare ale template" de mai multe ori in acest capitol fara a le explica de fapt. Pentru a remedia asta, ar trebui mai intai sa vorbim despre managers.
 
 ### Template Managers
 
-////
+Pana acum am intalnit Handlebars, care e doar un pic mai complicat ca si HTML, cu cateva tag-uri in plus. Spre deosebire de PHP (sau chiar HTML care poate contine JavaScript), Meteor pastreaza template-urile si logica bine separate. Template-urile singure su fac mare lucru.
 
-////
+Pentru a prinde viata, un template are nevoie de un **manager**. Poti vedea managerul ca un sef-bucatar care prepara ingredientele de baza (datele) si livreaza mancarea gata facuta chelnerului (template-ul) care in sfarsit o prezinta utilizatorului final. 
 
-////
+Cu alte cuvinte, rolul template-ului e limitat la afisarea variabilelor, managerul e cel care de fapt duce greul procesului calculand valorile pentru aceste variabile.
 
 <% note do %>
 
 ### Managers?
 
-////
+Cand intrebam programatorii Meteor cu numesc ei manageri de template, jumatate le spun "controllers" iar cealalta jumatate "fisierele unde pun codul JavaScript"
 
-////
+Managerii nu sunt chiar "controllers" (cel putin nu in sensul de controler MVC) iar "FUPCJS" nu suna prea bine, asa ca nu suntem de accord cu nici una dintre variante.
 
-////
+Cum avem nevoie de un nume pentru a indica despre ce vorbim, am venit cu idea de a utiliza termenul de "manager". Avantajul e ca nu are nici un inteles pre-definit, cel putin din punctul de vedere al programari web.
 
 <% end %>
 
-////
+Pentru simplicitate, am adoptat conventia de a numi manageri la fel ca template, doar ca au extensia **.js**. Asa ca sa cream de indata fisierul `posts_list.js` in `/client/views/posts` ca baza pentru primul nostru manager:
 
 ~~~js
 var postsData = [
@@ -150,17 +150,17 @@ Template.postsList.helpers({
 ~~~
 <%= caption "client/views/posts/posts_list.js" %>
 
-////
+Daca ai facut totul bine, ar trebui sa vezi ceva asemanator in browser:
 
 <%= screenshot "3-1", "Our first templates with static data" %>
 
 <%= commit "3-1", "Added basic posts list template and static data." %>
 
-////
+////We're doing two things here. First we're setting up some dummy prototype data in the `postsData` array. That data would normally come from the database, but since we haven't seen how to do that yet (wait for the next chapter) we're "cheating" by using static data.
 
-////
+////Second, we're using Meteor's `Template.myTemplate.helpers()` function to define a template helper called `posts` that simply returns our `postsData` array.
 
-////
+////Defining the `posts` helper means it is now available for our template to use:
 
 ~~~html
 <template name="postsList">
