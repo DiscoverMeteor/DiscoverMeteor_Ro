@@ -8,63 +8,64 @@ contents: Learn how to use GitHub to follow along with the book.
 paragraphs: 32
 ---
 
-////
+[GitHub](https://github.com/) este o rețea socială și un repository public pentru proiecte open-source, cu versionare bazată pe [Git](http://git-scm.com/), iar funcția principală a acestuia este de a simplifica procesul de distribuire a codului sursă și să înlesnească colaborarea pe proiecte. Dar, este și o unealtă foarte bună pentru invățat. În acest capitol extra, vom trece prin câteva metode prin care poți folosi GitHub ca să urmărești restul cărții *Discover Meteor*. 
 
-////
+Acest capitol presupune că nu ești deja familiar cu Git și GitHub. Dacă ești deja comfortabil cu ambele, poți să sari la următorul capitol!
 
-### Being Committed
+### Commit-ul
 
-////
+Unitatea de bază a unui repository de git este un *commit*. Te poți gândi la un commit ca un "instantaneu" al stării codului la un anumit moment în timp.
 
-////
+În loc să îți dăm pur și simplu codul terminat pentru Microscope, am făcut astfel de "instantanee" la fiecare pas al drumului, și le poți vedea pe toate online pe GitHub.
+Instead of simply giving you the finished code for Microscope, we've taken these snapshots every step of the way, and you can see all of them online on GitHub. 
 
-////
+De exemplu, iată cum arată [ultimul commit de la primul capitol](https://github.com/DiscoverMeteor/Microscope/commit/chapter3-2):
 
 <%= screenshot "s3-1", "A Git commit as shown on GitHub." %>
 
-////
+Ceea ce se vede aici este un “diff” (de la “diferență”) al fișierului `post_item.js`, adică schimbările impuse asupra acestuia de respectivul commit. În cazul de față, am creat fișierul `post_item.js` de la zero, astfel că tot conținutul acestuia este marcat cu verde.
 
-////
+Hai să comparăm cu un exemplu de [mai târziu in carte](https://github.com/DiscoverMeteor/Microscope/commit/chapter13-1):
 
 <%= screenshot "s3-2", "Modifying code." %>
 
-////
+De data aceasta, numai liniile modificare sunt marcate cu verde.
 
-////
+Și, bineînțeles, uneori nu adaugi sau modifici linii de cod, ci [le ștergi](https://github.com/DiscoverMeteor/Microscope/commit/chapter12-2):
 
 <%= screenshot "s3-3", "Deleting code." %>
 
-////
+Astfel, am văzut prima utilizare a lui GitHub: să vezi ce s-a schimbat dintr-o privire.
 
-### Browsing A Commit's Code
+### Explorarea codului unui commit
 
-////
+Vizualizarea unui commit ne arată schimbările incluse în acest commit, dar uneori s-ar putea sa vrei sa te uiți la fișierele care *nu* s-au schimbat, doar ca să te asiguri că codul lor arată cum trebuie în respectivul stadiu al procesului.
 
-////
+Din nou, GitHub ne vine în ajutor. Când ești pe pagina unui commit, apasă pe butonul de **Browse code** (“explorează cod”):
 
 <%= screenshot "s3-5", "The Browse code button." %>
 
-////
+Acum vei avea acces asupra repo-ului *exact cum era la un anumit commit*:
 
 <%= screenshot "s3-6", "The repository at commit 3-2." %>
 
-////
+GitHub nu ne dă prea multe indicii vizuale când ne uităm la un commit, dar putem să comparăm cu pagina “normală” de vizualizare și să vedem dintr-o privire că structura de fișiere este diferită:
 
 <%= screenshot "s3-7", "The repository at commit 14-2." %>
 
-### Accessing A Commit Locally
+### Accesarea unui commit local
 
-////
+Până acum ne-am uitat la codul unui commit online, prin GitHub. Dar cum facem daca vrem să facem același lucru local? De exemplu, s-ar putea să vrei să rulezi codul aplicației local la un anumit commit ca să vezi cum ar trebui sa se comporte la acel punct în procesul de dezvoltare.
 
-////
+Ca să facem asta, o să facem primii pași (mă rog, cel puțin pentru cartea asta) cu unealta de terminal `git`. Mai întâi, [asigură-te că ai git instalat](http://git-scm.com/downloads). Apoi, **clonează** (cu alte cuvinte, downloadează o copie locală) a repository-ului de Microscope cu comanda:
 
 ~~~bash
 $ git clone git@github.com:DiscoverMeteor/Microscope.git github_microscope
 ~~~
 
-////
+Acel `github_microscope` la sfârșitul comenzii este pur și simplu numele directorului local în care vei clona aplicația. Asumând că ai deja un director pre-existent numit `microscope`, am ales pur și simplu un alt nume. (nu este necesar ca acesta să fie același nume cu cel al repository-ului de pe GitHub).
 
-////
+Let's `cd` into the repository so that we can start using the `git` command line utility:
 
 ~~~bash
 $ cd github_microscope
