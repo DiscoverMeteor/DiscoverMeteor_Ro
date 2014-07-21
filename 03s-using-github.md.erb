@@ -91,17 +91,17 @@ do so (now or later) by using -b with the checkout command again. Example:
 HEAD is now at a004b56... Added basic posts list template and static data.
 ~~~
 
-////
+Git ne informează că ne aflăm în starea “detached HEAD”, ceea ce înseamnă că din punctul de vedere al lui Git, putem să ne uităm la commituri dar nu și să le modificăm. Poți să asemeni procesul ca unui vrăjitor care se uită in trecut prin bolul lui de cristal.
 
-////
+(De ținut minte e că Git are și comenzi care te lasă *să schimbi* commituri precedente Asta ar fi asemănător unui călător prin timp întorcându-se în timp și călcând pe un fluture, dar e ceva ce se află în afara scopului introducerii noastre.)
 
-////
+Motivul pentru care ai putut să scrii pur si simplu `chapter3-1` este pentru că am pre-taguit toate commiturile din Microscope cu capitolul corect din care fac parte. Dacă acesta nu era cazul, ar fi trebuit mai întâi să descoperi **hash**-ul unui commit, adică identificatorul său unic.
 
-////
+Din nou, GitHub ne face viața mai ușoară. Poți să găsești hash-ul unui commit în colțul din dreapta jos a commit-ului, așa cum puteți vedea aici:
 
 <%= screenshot "s3-4", "Finding a commit hash." %>
 
-////
+Așa că hai să încercăm comanda cu un hash în loc de un tag:
 
 ~~~bash
 $ git checkout c7af59e425cd4e17c20cf99e51c8cd78f82c9932
@@ -109,32 +109,34 @@ Previous HEAD position was a004b56... Added basic posts list template and static
 HEAD is now at c7af59e... Augmented the postsList route to take a limit
 ~~~
 
-////
+Și la final, cum facem dacă ne dorim să încetăm a ne uita prin bolul magic de cristal și sa ne întoarcem in prezent? Îi zicem lui Git că ne dorim să facem check out pe branch-ul de **master**:
 
 ~~~bash
 $ git checkout master
 ~~~
 
-### Historical Perspective
+De notat că poți rula aplicația cu comanda `meteor` la orice punct din proces, chiar și când te aflii în starea “detached HEAD”. S-ar putea să fie necesar să rulezi un `mrt update` rapid dacă Meteor se plânge de pachete lipsă, pentru ca codul pentru pachete nu este inclus in repo.
 
-////
+### Puțină Perspectivă Istorică
 
-////
+Uite alt scenariu comun: să zicem că te uiți la un fișier si observi niște schimbări pe care nu le-ai mai văzut inainte. Treaba e, nu îți amintești *când* a fost schimbat fișierul. Ai putea să te uiți la fiecare commit unul câte unul până îl găsești pe cel corect, dar există o metodă mai ușoară mulțumită funcției de **History** al lui GitHub.
+
+Mai întâi, accesează fișierele repository-ului pe GitHub, și localizează butonul de “History”:
 
 <%= screenshot "s3-8", "GitHub's History button." %>
 
-////
+Ar trebui să ai o listă frumos ordonată cu toate commit-urile care au afectat respectivul fișier:
 
 <%= screenshot "s3-9", "Displaying a file's history." %>
 
-### The Blame Game
+### Pe cine dai vina?
 
-////
+Ca să încheiem, să ne uităm la comanda **Blame**:
 
 <%= screenshot "s3-10", "GitHub's Blame button." %>
 
-////
+Această comandă ne arată linie cu linie cine a modificat un fișier, și în ce commit (cu alte cuvinte, cine e de vină când nu mai merg lucrurile cum trebuie):
 
 <%= screenshot "s3-11", "GitHub's Blame view." %>
 
-////
+Git este o unealtă destul de complexă – și la fel și GitHub –, așa că nu avem nicio șansă să acoperim totul într-un singur capitol. Defapt, abia am atins suprafața a ceea ce e posibil cu aceste unelte. Dar, sperăm că până și doar părticica asta o să vă vină în ajutor pe măsură ce urmarești restul cărții.
