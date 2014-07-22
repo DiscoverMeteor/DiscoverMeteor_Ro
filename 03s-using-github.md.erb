@@ -8,71 +8,72 @@ contents: Learn how to use GitHub to follow along with the book.
 paragraphs: 32
 ---
 
-////
+[GitHub](https://github.com/) este o rețea socială și un repository public pentru proiecte open-source, cu versionare bazată pe [Git](http://git-scm.com/), iar funcția principală a acestuia este de a simplifica procesul de distribuire a codului sursă și să înlesnească colaborarea pe proiecte. Dar, este și o unealtă foarte bună pentru invățat. În acest capitol extra, vom trece prin câteva metode prin care poți folosi GitHub ca să urmărești restul cărții *Discover Meteor*. 
 
-////
+Acest capitol presupune că nu ești deja familiar cu Git și GitHub. Dacă ești deja comfortabil cu ambele, poți să sari la următorul capitol!
 
-### Being Committed
+### Commit-ul
 
-////
+Unitatea de bază a unui repository de git este un *commit*. Te poți gândi la un commit ca un "instantaneu" al stării codului la un anumit moment în timp.
 
-////
+În loc să îți dăm pur și simplu codul terminat pentru Microscope, am făcut astfel de "instantanee" la fiecare pas al drumului, și le poți vedea pe toate online pe GitHub.
+Instead of simply giving you the finished code for Microscope, we've taken these snapshots every step of the way, and you can see all of them online on GitHub. 
 
-////
+De exemplu, iată cum arată [ultimul commit de la primul capitol](https://github.com/DiscoverMeteor/Microscope/commit/chapter3-2):
 
 <%= screenshot "s3-1", "A Git commit as shown on GitHub." %>
 
-////
+Ceea ce se vede aici este un “diff” (de la “diferență”) al fișierului `post_item.js`, adică schimbările impuse asupra acestuia de respectivul commit. În cazul de față, am creat fișierul `post_item.js` de la zero, astfel că tot conținutul acestuia este marcat cu verde.
 
-////
+Hai să comparăm cu un exemplu de [mai târziu in carte](https://github.com/DiscoverMeteor/Microscope/commit/chapter13-1):
 
 <%= screenshot "s3-2", "Modifying code." %>
 
-////
+De data aceasta, numai liniile modificare sunt marcate cu verde.
 
-////
+Și, bineînțeles, uneori nu adaugi sau modifici linii de cod, ci [le ștergi](https://github.com/DiscoverMeteor/Microscope/commit/chapter12-2):
 
 <%= screenshot "s3-3", "Deleting code." %>
 
-////
+Astfel, am văzut prima utilizare a lui GitHub: să vezi ce s-a schimbat dintr-o privire.
 
-### Browsing A Commit's Code
+### Explorarea codului unui commit
 
-////
+Vizualizarea unui commit ne arată schimbările incluse în acest commit, dar uneori s-ar putea sa vrei sa te uiți la fișierele care *nu* s-au schimbat, doar ca să te asiguri că codul lor arată cum trebuie în respectivul stadiu al procesului.
 
-////
+Din nou, GitHub ne vine în ajutor. Când ești pe pagina unui commit, apasă pe butonul de **Browse code** (“explorează cod”):
 
 <%= screenshot "s3-5", "The Browse code button." %>
 
-////
+Acum vei avea acces asupra repo-ului *exact cum era la un anumit commit*:
 
 <%= screenshot "s3-6", "The repository at commit 3-2." %>
 
-////
+GitHub nu ne dă prea multe indicii vizuale când ne uităm la un commit, dar putem să comparăm cu pagina “normală” de vizualizare și să vedem dintr-o privire că structura de fișiere este diferită:
 
 <%= screenshot "s3-7", "The repository at commit 14-2." %>
 
-### Accessing A Commit Locally
+### Accesarea unui commit local
 
-////
+Până acum ne-am uitat la codul unui commit online, prin GitHub. Dar cum facem daca vrem să facem același lucru local? De exemplu, s-ar putea să vrei să rulezi codul aplicației local la un anumit commit ca să vezi cum ar trebui sa se comporte la acel punct în procesul de dezvoltare.
 
-////
+Ca să facem asta, o să facem primii pași (mă rog, cel puțin pentru cartea asta) cu unealta de terminal `git`. Mai întâi, [asigură-te că ai git instalat](http://git-scm.com/downloads). Apoi, **clonează** (cu alte cuvinte, downloadează o copie locală) a repository-ului de Microscope cu comanda:
 
 ~~~bash
 $ git clone git@github.com:DiscoverMeteor/Microscope.git github_microscope
 ~~~
 
-////
+Acel `github_microscope` la sfârșitul comenzii este pur și simplu numele directorului local în care vei clona aplicația. Asumând că ai deja un director pre-existent numit `microscope`, am ales pur și simplu un alt nume. (nu este necesar ca acesta să fie același nume cu cel al repository-ului de pe GitHub).
 
-////
+Let's `cd` into the repository so that we can start using the `git` command line utility:
 
 ~~~bash
 $ cd github_microscope
 ~~~
 
-////
+Când am clonat repository-ul de pe GitHub, am downloadat *tot* codul aplicației, ceea ce înseamnă că ne uităm în acest moment la codul de la ultimul commit efectuat.
 
-////
+Din fericire, există o metodă să ne întoarcem îm timp și să “check out”-uim un commit anume fără a le afecta pe celelalte. Ia să încercăm.
 
 ~~~bash
 $ git checkout chapter3-1
@@ -90,17 +91,17 @@ do so (now or later) by using -b with the checkout command again. Example:
 HEAD is now at a004b56... Added basic posts list template and static data.
 ~~~
 
-////
+Git ne informează că ne aflăm în starea “detached HEAD”, ceea ce înseamnă că din punctul de vedere al lui Git, putem să ne uităm la commituri dar nu și să le modificăm. Poți să asemeni procesul ca unui vrăjitor care se uită in trecut prin bolul lui de cristal.
 
-////
+(De ținut minte e că Git are și comenzi care te lasă *să schimbi* commituri precedente Asta ar fi asemănător unui călător prin timp întorcându-se în timp și călcând pe un fluture, dar e ceva ce se află în afara scopului introducerii noastre.)
 
-////
+Motivul pentru care ai putut să scrii pur si simplu `chapter3-1` este pentru că am pre-taguit toate commiturile din Microscope cu capitolul corect din care fac parte. Dacă acesta nu era cazul, ar fi trebuit mai întâi să descoperi **hash**-ul unui commit, adică identificatorul său unic.
 
-////
+Din nou, GitHub ne face viața mai ușoară. Poți să găsești hash-ul unui commit în colțul din dreapta jos a commit-ului, așa cum puteți vedea aici:
 
 <%= screenshot "s3-4", "Finding a commit hash." %>
 
-////
+Așa că hai să încercăm comanda cu un hash în loc de un tag:
 
 ~~~bash
 $ git checkout c7af59e425cd4e17c20cf99e51c8cd78f82c9932
@@ -108,32 +109,34 @@ Previous HEAD position was a004b56... Added basic posts list template and static
 HEAD is now at c7af59e... Augmented the postsList route to take a limit
 ~~~
 
-////
+Și la final, cum facem dacă ne dorim să încetăm a ne uita prin bolul magic de cristal și sa ne întoarcem in prezent? Îi zicem lui Git că ne dorim să facem check out pe branch-ul de **master**:
 
 ~~~bash
 $ git checkout master
 ~~~
 
-### Historical Perspective
+De notat că poți rula aplicația cu comanda `meteor` la orice punct din proces, chiar și când te aflii în starea “detached HEAD”. S-ar putea să fie necesar să rulezi un `mrt update` rapid dacă Meteor se plânge de pachete lipsă, pentru ca codul pentru pachete nu este inclus in repo.
 
-////
+### Puțină Perspectivă Istorică
 
-////
+Uite alt scenariu comun: să zicem că te uiți la un fișier si observi niște schimbări pe care nu le-ai mai văzut inainte. Treaba e, nu îți amintești *când* a fost schimbat fișierul. Ai putea să te uiți la fiecare commit unul câte unul până îl găsești pe cel corect, dar există o metodă mai ușoară mulțumită funcției de **History** al lui GitHub.
+
+Mai întâi, accesează fișierele repository-ului pe GitHub, și localizează butonul de “History”:
 
 <%= screenshot "s3-8", "GitHub's History button." %>
 
-////
+Ar trebui să ai o listă frumos ordonată cu toate commit-urile care au afectat respectivul fișier:
 
 <%= screenshot "s3-9", "Displaying a file's history." %>
 
-### The Blame Game
+### Pe cine dai vina?
 
-////
+Ca să încheiem, să ne uităm la comanda **Blame**:
 
 <%= screenshot "s3-10", "GitHub's Blame button." %>
 
-////
+Această comandă ne arată linie cu linie cine a modificat un fișier, și în ce commit (cu alte cuvinte, cine e de vină când nu mai merg lucrurile cum trebuie):
 
 <%= screenshot "s3-11", "GitHub's Blame view." %>
 
-////
+Git este o unealtă destul de complexă – și la fel și GitHub –, așa că nu avem nicio șansă să acoperim totul într-un singur capitol. Defapt, abia am atins suprafața a ceea ce e posibil cu aceste unelte. Dar, sperăm că până și doar părticica asta o să vă vină în ajutor pe măsură ce urmarești restul cărții.
