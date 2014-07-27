@@ -10,51 +10,51 @@ paragraphs: 52
 
 Publicațiile și subscrierile sunt unul din conceptele fundamentale în Meteor, dar pot fi complicate de înțeles la început.
 
-////
+Acest fapt a condus în trecut la niște neînțelegeri, cum ar fi conceptul nefondat că aplicațiile Meteor nu sunt sigure, sau că acestea nu se pot descurca cu cantități mari de date.
 
-////
+Un motiv pentru care oamenii sunt derutați de aceste concepte inițial este "magia" pe care Meteor o face pentru noi. Deși aceasta este foarte folositoare, poate conduce la obfuscarea a ceea ce se întâmplă defapt în spatele scenei. Așa că, hai să dăm la o parte fumul si oglinzile și să vedem ce se întamplă cu adevărat.
 
-### The Olden Days
+### Metoda veche
 
-////
+Dar mai întâi, hai să ne uităm în trecut în 2011 când Meteor încă nu exista. Să zicem că vrei să construiești o aplicație Rails. Când un utilizator îți apeleaza site-ul, clientul (browserul) trimite o cerere aplicației, care rulează pe server.
 
-////
+Prima sarcină a aplicației este să își dea seama care este informația pe care utilizatorul are nevoie să o vadă. Aceasta ar putea să fie o pagină de căutare cu 12 rezultate, profilul de utilizator al Mariei, ultimele 20 de tweeturi ale lui Bob, și așa mai departe. Practic, îți poți închipui că aplicația joacă rolul unui bibliotecar care parcurge cotloanele în căutarea cărții cerute.
 
-////
+O dată ce informația a fost selectată, a doua sarcină a aplicației este transformarea acesteia în HTML curat (sau JSON în cazul unui API).
 
-////
+Păstrând metafora bibliotecii, aceasta ar fi împachetarea cărții pe care tocmai ce ai cumpărat-o și înmânarea acesteia într-o punguță. Aceasta este partea de "View" a paradigmei faimoase de Model-View-Controller.
 
-////
+În final, aplicația ia codul HTML și îl trimite browserului. Treaba aplicației s-a încheiat, și acum că toată treaba este în afara mânuțelor ei virtuale poate să se relaxeze liniștită, cu o bere rece eventual, până la venirea următoarei cereri.
 
-### The Meteor Way
+### Metoda Meteor
 
-////
+Să trecem în revistă ce face Meteor așa de special prin comparație. După cum am văzut, cheia inovației din Meteor este că în timp ce o aplicație Rails trăiește **numai pe server**, o aplicație Meteor include o componentă client-side care rulează **și pe client** (browserul).
 
-<%= diagram "client-server", "Pushing a subset of the database to the client.", "pull-right" %>
+<%= diagram "client-server", "Trimiterea spre client a unei submulțimi din baza de date", "pull-right" %>
 
-////
+Asta este ca bibliotecarul care nu doar că îți găsește cartea corectă, dar mai și vine cu tine până acasă ca să ți-o citească înainte să te culci (mda, analogia e cam ciudată).
 
-////
+Această arhitectură îi permite lui Meteor să facă foarte multe chestii, cea mai importantă fiind principiul de [database everywhere](http://docs.meteor.com/#sevenprinciples). Pe scurt, Meteor va lua o submulțime a bazei tale de date și o va *copia pe client*. 
 
-////
+Aceasta conduce la două mari consecințe: mai întâi, în loc să trimiți cod HTML clientului, o aplicație Meteor va trimite **doar informație pură**, și va lăsa clientul să se descurce cu ea, după principiul ([data on the wire](http://docs.meteor.com/#sevenprinciples)). Apoi, vei putea să **accesezi informația instantaneu** fără să trebuiască să aștepți să trimiți și să se și întoarcă datele de la server, principiul de ([latency compensation](http://docs.meteor.com/#sevenprinciples)).
 
-### Publishing
+### Publicațiile
 
-////
+Baza de date a unei aplicații conține zeci de mii de documente, unele dintre ele putând fi și private sau sensibile. Așa că nu ne dorim să punem în oglindă întreaga bază de date în memoria clientului, pentru motive de securitate si de scalabilitate.
 
-////
+Așa că avem nevoie de o metodă prin care să îi zicem lui Meteor care **submulțime** a informației poate fi trimisă clientului, lucru care se poate realiza prin intermediul unei **publicații**.
 
-////
+Să ne întoarcem la Microscope. Iată toate postările aplicației noastre, în baza de date:
 
-<%= diagram "collections-1", "All the posts contained in our database.", "pull-center" %>
+<%= diagram "collections-1", "Toate postările din baza de date.", "pull-center" %>
 
-////
+Deși nu avem această funcție în Microscope, să ne imaginăm că unele din postările noastre au fost marcate ca având limbaj abuziv. Deși ne dorim să le ținem în baza de date, nu dorim să le afișăm utilizatorilor (adică nu vrem să le trimitem clienților).
 
-////
+Primul pas este să îi zicem lui Meteor ce informație *ne dorim* să trimitem clientului. O să îi spunem lui Meteor că dorim să **publicăm** numai postări care nu sunt marcate cu "flag":
 
-<%= diagram "collections-2", "Excluding flagged posts.", "pull-center" %>
+<%= diagram "collections-2", "Excluderea posturilor marcate cu 'flag'.", "pull-center" %>
 
-////
+Iată codul corespunzător, care s-ar afla pe server:
 
 ~~~js
 // on the server
@@ -63,15 +63,15 @@ Meteor.publish('posts', function() {
 });
 ~~~
 
-////
+Acest cod se asigură că nu există **nicio metoda posibilă** prin care un client să obțină acces asupra unei postări marcate cu flag. Aceasta este metoda prin care te asiguri că o aplicație Meteor este sigură: publici clientului numai datele la care are voie să aibă acces.
 
 <% note do %>
 
 ### DDP
 
-////
+La nivel fundamental, te poți gândi la sistemul de publicație/subscripție ca la un tub care transmite datele de pe colecția (sursă) de pe server la colecția (destinație) de pe client.
 
-////
+///
 
 <% end %>
 
