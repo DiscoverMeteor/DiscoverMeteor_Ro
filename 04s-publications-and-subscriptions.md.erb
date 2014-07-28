@@ -71,21 +71,21 @@ Acest cod se asigură că nu există **nicio metoda posibilă** prin care un cli
 
 La nivel fundamental, te poți gândi la sistemul de publicație/subscripție ca la un tub care transmite datele de pe colecția (sursă) de pe server la colecția (destinație) de pe client.
 
-///
+Protocolul care se vorbește prin acel tub se numește **DDP** (care înseamnă Distributed Data Protocol). Ca să afli mai mult despre DDP, poți să te uiți la [această înregistrare de la The Real-Time Conference](http://2012.realtimeconf.com/video/matt-debergalis) de Matt DeBergalis (unul din fondatorii Meteor), sau la [acest screencast](http://www.eventedmind.com/posts/meteor-subscriptions-and-ddp) de Chris Mather care explică acest concept mai în detaliu.
 
 <% end %>
 
-### Subscribing
+### Subscripția
 
-////
+Deși ne dorim să facem toate postările care nu au fost marcate cu flag clienților, nu putem să trimitem pur și simplu mii de postări în același timp. Avem nevoie de o metodă prin care să specificăm clienților care este submulțimea de date de care au nevoie la un anumit moment, și aici întră în scenă **subscripțiile**.
 
-////
+Toate datele la care ești subscris vor fi **oglindite** pe client mulțumită lui Minimongo, implementarea client-side de MongoDB a lui Meteor.
 
-////
+De exemplu, să zicem că ne aflăm pe pagina de profil a lui Bob Smith, și dorim să afișăm numai postările *lui*.
 
-<%= diagram "collections-3", "Subscribing to Bob's posts will mirror them on the client.", "pull-center" %>
+<%= diagram "collections-3", "Subscrierea la postările lui Bob le va oglindi pe client.", "pull-center" %>
 
-////
+Mai întâi, să ne extindem publicația ca să folosească un parametru adițional:
 
 ~~~js
 // on the server
@@ -94,14 +94,14 @@ Meteor.publish('posts', function(author) {
 });
 ~~~
 
-////
+Apoi putem să definim acel parametru când când ne *subscriem* la acea publicație din codul aplicației noastre client:
 
 ~~~js
 // on the client
 Meteor.subscribe('posts', 'bob-smith');
 ~~~
 
-////
+Aceasta este metoda prin care poți să faci o aplicație Meteor să fie scalabilă pe partea de client; în loc să te subscrii la *toată* informația disponibilă, poți să alegi doar părțile care te interesează. În acest fel, eviți să supraîncarci memoria browserului indiferent cât de mare este baza de date de pe server.
 
 ### Finding
 
