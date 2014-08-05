@@ -1,60 +1,60 @@
 ---
-title: Publications and Subscriptions
+title: Publicații și Subscrieri
 slug: publications-and-subscriptions
 date: 0004/01/02
 number: 4.5
 sidebar: true
-contents: Understand how publications and subscriptions work.|Learn what the default Autopublish package does.|See a few more examples of publication patterns.
+contents: Vei învăța cum funcționează publicațiile și subscripțiile.|Vei învăța ce face pachetul Autopublish.|Vei vedea mai multe exemple de tertipuri de publicații.
 paragraphs: 52
 ---
 
-////
+Publicațiile și subscrierile sunt unul din conceptele fundamentale în Meteor, dar pot fi complicate de înțeles la început.
 
-////
+Acest fapt a condus în trecut la niște neînțelegeri, cum ar fi conceptul nefondat că aplicațiile Meteor nu sunt sigure, sau că acestea nu se pot descurca cu cantități mari de date.
 
-////
+Un motiv pentru care oamenii sunt derutați de aceste concepte inițial este "magia" pe care Meteor o face pentru noi. Deși aceasta este foarte folositoare, poate conduce la obfuscarea a ceea ce se întâmplă defapt în spatele scenei. Așa că, hai să dăm la o parte fumul si oglinzile și să vedem ce se întamplă cu adevărat.
 
-### The Olden Days
+### Metoda veche
 
-////
+Dar mai întâi, hai să ne uităm în trecut în 2011 când Meteor încă nu exista. Să zicem că vrei să construiești o aplicație Rails. Când un utilizator îți apeleaza site-ul, clientul (browserul) trimite o cerere aplicației, care rulează pe server.
 
-////
+Prima sarcină a aplicației este să își dea seama care este informația pe care utilizatorul are nevoie să o vadă. Aceasta ar putea să fie o pagină de căutare cu 12 rezultate, profilul de utilizator al Mariei, ultimele 20 de tweeturi ale lui Bob, și așa mai departe. Practic, îți poți închipui că aplicația joacă rolul unui bibliotecar care parcurge cotloanele în căutarea cărții cerute.
 
-////
+O dată ce informația a fost selectată, a doua sarcină a aplicației este transformarea acesteia în HTML curat (sau JSON în cazul unui API).
 
-////
+Păstrând metafora bibliotecii, aceasta ar fi împachetarea cărții pe care tocmai ce ai cumpărat-o și înmânarea acesteia într-o punguță. Aceasta este partea de "View" a paradigmei faimoase de Model-View-Controller.
 
-////
+În final, aplicația ia codul HTML și îl trimite browserului. Treaba aplicației s-a încheiat, și acum că toată treaba este în afara mânuțelor ei virtuale poate să se relaxeze liniștită, cu o bere rece eventual, până la venirea următoarei cereri.
 
-### The Meteor Way
+### Metoda Meteor
 
-////
+Să trecem în revistă ce face Meteor așa de special prin comparație. După cum am văzut, cheia inovației din Meteor este că în timp ce o aplicație Rails trăiește **numai pe server**, o aplicație Meteor include o componentă client-side care rulează **și pe client** (browserul).
 
-<%= diagram "client-server", "Pushing a subset of the database to the client.", "pull-right" %>
+<%= diagram "client-server", "Trimiterea spre client a unei submulțimi din baza de date", "pull-right" %>
 
-////
+Asta este ca bibliotecarul care nu doar că îți găsește cartea corectă, dar mai și vine cu tine până acasă ca să ți-o citească înainte să te culci (mda, analogia e cam ciudată).
 
-////
+Această arhitectură îi permite lui Meteor să facă foarte multe chestii, cea mai importantă fiind principiul de [database everywhere](http://docs.meteor.com/#sevenprinciples). Pe scurt, Meteor va lua o submulțime a bazei tale de date și o va *copia pe client*. 
 
-////
+Aceasta conduce la două mari consecințe: mai întâi, în loc să trimiți cod HTML clientului, o aplicație Meteor va trimite **doar informație pură**, și va lăsa clientul să se descurce cu ea, după principiul ([data on the wire](http://docs.meteor.com/#sevenprinciples)). Apoi, vei putea să **accesezi informația instantaneu** fără să trebuiască să aștepți să trimiți și să se și întoarcă datele de la server, principiul de ([latency compensation](http://docs.meteor.com/#sevenprinciples)).
 
-### Publishing
+### Publicațiile
 
-////
+Baza de date a unei aplicații conține zeci de mii de documente, unele dintre ele putând fi și private sau sensibile. Așa că nu ne dorim să punem în oglindă întreaga bază de date în memoria clientului, pentru motive de securitate si de scalabilitate.
 
-////
+Așa că avem nevoie de o metodă prin care să îi zicem lui Meteor care **submulțime** a informației poate fi trimisă clientului, lucru care se poate realiza prin intermediul unei **publicații**.
 
-////
+Să ne întoarcem la Microscope. Iată toate postările aplicației noastre, în baza de date:
 
-<%= diagram "collections-1", "All the posts contained in our database.", "pull-center" %>
+<%= diagram "collections-1", "Toate postările din baza de date.", "pull-center" %>
 
-////
+Deși nu avem această funcție în Microscope, să ne imaginăm că unele din postările noastre au fost marcate ca având limbaj abuziv. Deși ne dorim să le ținem în baza de date, nu dorim să le afișăm utilizatorilor (adică nu vrem să le trimitem clienților).
 
-////
+Primul pas este să îi zicem lui Meteor ce informație *ne dorim* să trimitem clientului. O să îi spunem lui Meteor că dorim să **publicăm** numai postări care nu sunt marcate cu "flag":
 
-<%= diagram "collections-2", "Excluding flagged posts.", "pull-center" %>
+<%= diagram "collections-2", "Excluderea posturilor marcate cu 'flag'.", "pull-center" %>
 
-////
+Iată codul corespunzător, care s-ar afla pe server:
 
 ~~~js
 // on the server
@@ -63,29 +63,29 @@ Meteor.publish('posts', function() {
 });
 ~~~
 
-////
+Acest cod se asigură că nu există **nicio metoda posibilă** prin care un client să obțină acces asupra unei postări marcate cu flag. Aceasta este metoda prin care te asiguri că o aplicație Meteor este sigură: publici clientului numai datele la care are voie să aibă acces.
 
 <% note do %>
 
 ### DDP
 
-////
+La nivel fundamental, te poți gândi la sistemul de publicație/subscripție ca la un tub care transmite datele de pe colecția (sursă) de pe server la colecția (destinație) de pe client.
 
-////
+Protocolul care se vorbește prin acel tub se numește **DDP** (care înseamnă Distributed Data Protocol). Ca să afli mai mult despre DDP, poți să te uiți la [această înregistrare de la The Real-Time Conference](http://2012.realtimeconf.com/video/matt-debergalis) de Matt DeBergalis (unul din fondatorii Meteor), sau la [acest screencast](http://www.eventedmind.com/posts/meteor-subscriptions-and-ddp) de Chris Mather care explică acest concept mai în detaliu.
 
 <% end %>
 
-### Subscribing
+### Subscripția
 
-////
+Deși ne dorim să facem toate postările care nu au fost marcate cu flag clienților, nu putem să trimitem pur și simplu mii de postări în același timp. Avem nevoie de o metodă prin care să specificăm clienților care este submulțimea de date de care au nevoie la un anumit moment, și aici întră în scenă **subscripțiile**.
 
-////
+Toate datele la care ești subscris vor fi **oglindite** pe client mulțumită lui Minimongo, implementarea client-side de MongoDB a lui Meteor.
 
-////
+De exemplu, să zicem că ne aflăm pe pagina de profil a lui Bob Smith, și dorim să afișăm numai postările *lui*.
 
-<%= diagram "collections-3", "Subscribing to Bob's posts will mirror them on the client.", "pull-center" %>
+<%= diagram "collections-3", "Subscrierea la postările lui Bob le va oglindi pe client.", "pull-center" %>
 
-////
+Mai întâi, să ne extindem publicația ca să folosească un parametru adițional:
 
 ~~~js
 // on the server
@@ -94,22 +94,22 @@ Meteor.publish('posts', function(author) {
 });
 ~~~
 
-////
+Apoi putem să definim acel parametru când când ne *subscriem* la acea publicație din codul aplicației noastre client:
 
 ~~~js
 // on the client
 Meteor.subscribe('posts', 'bob-smith');
 ~~~
 
-////
+Aceasta este metoda prin care poți să faci o aplicație Meteor să fie scalabilă pe partea de client; în loc să te subscrii la *toată* informația disponibilă, poți să alegi doar părțile care te interesează. În acest fel, eviți să supraîncarci memoria browserului indiferent cât de mare este baza de date de pe server.
 
-### Finding
+### Găsirea
 
-////
+Postările lui Bob sunt împărțite pe categorii multiple (de exemplu: "JavaScript", "Ruby", si "Python"). Poate ne dorim ca în continuare să încărcăm toate postările lui Bob în memorie, dar nu vrem să le afișăm decât pe cele din categoria "JavaScript" la momentul de față. Aici intervine "găsirea" acestora.
 
-<%= diagram "collections-4", "Selecting a subset of documents on the client.", "pull-center" %>
+<%= diagram "collections-4", "Selectarea unui subset de documente pe client.", "pull-center" %>
 
-////
+Exact la fel cum am făcut pe server, vom folosi funcția `Posts.find()` pentru a selecta doar o submulțime din datele noastre:
 
 ~~~js
 // on the client
@@ -120,25 +120,25 @@ Template.posts.helpers({
 });
 ~~~
 
-////
+Acum că avem o idee bună asupra conceptului de publicație și subscripție, să săpăm mai adânc și sa revizuim câteva modele de bază de implementare.
 
 ### Autopublish
 
-////
+Dacă creezi un proiect Meteor de la bază (de exemplu folosind `meteor create`), acesta va avea automat pachetul `autopublish` instalat. Ca un punct de pornire, hai să vorbim despre ce face acesta mai exact.
 
-////
+Scopul lui `autopublish` este să facă treaba foarte simplă ca tu să te apuci să programezi la o aplicație Meteor, și face asta oglindind automat _toate datele_ de pe server pe clienți, făcând automat publicațiile și subscripțiile necesare.
 
 <%= diagram "autopublish", "Autopublish", "pull-center"%>
 
-////
+Cum funcționează asta? Să zicem că ai o colecție numită `'posts'` pe server. Apoi `autopublish` va trimite automat toate postările pe care le găsește în colecția de Mongo într-o colectie numită tot `posts` pe client (presupunând că există măcar unul).
 
-////
+Deci dacă folosești `autopublish`, nu trebuie să te gândești la publicații. Datele sunt omniprezente, și lucrurile sunt simple. Bineînțeles, sunt probleme evidente cu trimisul tuturor datelor disponibile tuturor clienților conectați.
 
-////
+Din acest motiv, autopublish este potrivit numai pentru aplicațiile care se află în stare incipientă, și care nu s-au gândit încă la publicații.
 
-### Publishing Full Collections
+### Publicarea colecțiilor complete
 
-////
+După ce ai eliminat `autopublish`, vei realiza foarte rapid că datele tale au dispărut de pe client. O metodă simplă de a le aduce înapoi este să mimezi ce face autopublish, și să publici o colecție în întregime. De exemplu:
 
 ~~~js 
 Meteor.publish('allPosts', function(){
@@ -146,13 +146,13 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-<%= diagram "fullcollection", "Publishing a full collection", "pull-center" %>
+<%= diagram "fullcollection", "Publicarea unei colecții în întregime.", "pull-center" %>
 
-////
+Publicăm în continuare colecția completă, dar măcar deținem controlul asupra căror colecții alegem să le publicăm sau nu. În acest caz, publicăm colecția `Posts` dar nu și colecția `Comments`.
 
-### Publishing Partial Collections
+### Publicarea colecțiilor parțiale
 
-////
+Următorul nivel de control este publicarea unei _părți_ a unei colecții. De exemplu, numai postările care aparțin unui anumit autor:
 
 ~~~js 
 Meteor.publish('somePosts', function(){
@@ -160,33 +160,33 @@ Meteor.publish('somePosts', function(){
 });
 ~~~
 
-<%= diagram "partialcollection", "Publishing a partial collection", "pull-center" %>
+<%= diagram "partialcollection", "Publicarea unei colecții parțiale", "pull-center" %>
 
 <% note do %>
 
-### Behind The Scenes
+### În Culise
 
-////
+Dacă ai citit [documentația Meteor pentru publicații](http://docs.meteor.com/#publishandsubscribe), s-ar putea să fi fost derutat de utilizarea comenzilor de `added()` și `ready()` pentru a seta atribute pe client, și te-ai chinuit să îți dai seama cum se pretează asta cu aplicațiile Meteor pe care le-ai văzut dar nu folosesc nicidecum acele funcții.
 
-////
+Motivul este pentru că Meteor ne oferă o funcție mult mai convenabilă: `_publishCursor()`. Nici pe aia nu ai mai văzut-o? Poate nu direct, dar dacă returnezi un [cursor](/chapter/meteor-vocabulary/) (de exemplu, `Posts.find({'author':'Tom'})`) într-o funcție de publish, exact asta folosește și Meteor.
 
-////
+Când Meteor vede că publicația `somePosts` a returnat un cursor, el apelează `_publishCursor()` și -- ai ghicit -- publică cursorul acela în mod automat.
 
-////
+Iată ce face funcția `_publishCursor()`:
 
-- ////
-- ////
-- ////
+- Verifică numele colecției de pe server.
+- Trage toate documentele care se potrivesc cursorului și le trimite într-o colecție pe client *care poartă același nume*. (Folosește metoda `.added()` pentru asta).
+- De câte ori un document este adăugat, schimbat sau eliminat, trimite acele schimbări clientului. (Folosește `.observe()` pe cursor și `.added()`, `.changed()` și `.removed()` pentru a face asta).
 
-////
+Deci în exemplul de mai sus, putem să ne asigurăm că utilizatorul are acces numai la postările care îi sunt de interes (cele scrise de Tom) în cache-ul lui client-side.
 
 <% end %>
 
-### Publishing Partial Properties
+### Publicarea proprietăților parțiale
 
-////
+Am văzut cum putem să publicăm unele din postările noastre, dar putem să tăiem și mai fin de atât! Hai să vedem cum putem să publicăm numai anumite *proprietăți*.
 
-////
+Exact ca înainte, vom folosi `find()` ca să întoarcem un cursor, dar de data aceasta vom exclude anumite câmpuri:
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -196,9 +196,9 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-<%= diagram "partialproperties", "Publishing partial properties", "pull-center" %>
+<%= diagram "partialproperties", "Publicarea proprietăților parțiale", "pull-center" %>
 
-////
+Bineînțeles, putem să combinăm ambele tehnici. De exemplu, dacă ne doream să întoarcem toate postările lui Tom dar să nu le luam datele calendaristice pe care au fost scrise, am putea să scriem:
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -208,10 +208,11 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-### Summing Up
+### Recapitulare
 
-////
+Prin urmare am văzut cum putem să mergem de la publicarea tuturor proprietăților ale tuturor documentelor din toate colecțiile (cu `autopublish`) la publicarea numai _anumitor_ proprietăți ale unor _anumite_ documente din _anumite_ colecții.
 
-////
+Asta ar trebui să acopere bazele din ceea ce poți să faci cu publicații Meteor, iar aceste tehnici ar trebui să acopere majoritatea cazurilor de utilizare.
 
-////
+Uneori, trebuie să mergi și mai departe și să combini, unești și concatenezi publicații. Ne vom ocupa de asta mai târziu!
+
