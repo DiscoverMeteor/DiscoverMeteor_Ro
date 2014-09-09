@@ -3,7 +3,7 @@ title: Notiuni de baza
 slug: getting-started
 date: 0002/01/01
 number: 2
-contents: Instaleaza Meteor & Meteorite.|Invata despre cele 5 tipuri de pachete Meteor.|Configureaza structura de fisiere a unei aplicatii Meteor.
+contents: Instaleaza Meteor.|Invata despre cele 5 tipuri de pachete Meteor.|Configureaza structura de fisiere a unei aplicatii Meteor.
 paragraphs: 49
 ---
 
@@ -25,70 +25,25 @@ Daca nu poti (sau nu vrei) sa instalezi Meteor pe sistemul local, iti recomandam
 
 Nitrous.io este un serviciu unde poti rula si edita aplicatii direct in browser, iar noi avem scris [un scurt gid] (https://www.discovermeteor.com/2013/10/04/meteor-nitrous/) pentru a te putea ajuta cum sa incepi.
 
-Poti urmari acel ghid pentru a instala sectiunea despre Meteor & Meteorite, apoi parcurge cartea incepand cu capitolul "Creeaza o simpla apliatie".
-
-<% end %>
- 
-### Meteorite
-
-Pentru faptul ca Meteor nu suporta pachete de la terti in mod nativ, Tom Coleman (unul dintre autorii cartii) si unii dintre membrii comunitatii au creat [Meteorite](http://oortcloud.github.com/meteorite/), un depozitar pentru Meteor. Meteorite are de asemenea grija de instalarea Meteor pentru tine si de a-l configura sa mearga cu orice pachete gasesti.
-
-Din moment ce ne vom baza pe pachete din terte surse pentru unele dintre functionalitatile Microscope, haide sa instalam Meteorite.
-
-### Instaleaza Meteorite
-
-Trebuie sa fi sigur ca node si git sunt instalate pe sistemul tau. Instaleaza-le dupa standardul sitemului tau de operare, sau folosind urmatoarele legaturi:
- 
-- [Node download site](http://nodejs.org/download/)
-- [Git download site](http://git-scm.com/downloads)
-
-In al doilea rand, sa instalam Meteorite. Ca modul executabil [npm](https://npmjs.org/), il vom instala cu:
-
-~~~bash
-$ npm install -g meteorite
-~~~
-
-<% note do %>
-
-### Eroare de permisii?
-
-Pe unele masini vei avea nevoie de permisie root pentru a instala Meteorite. Pentru a evita aceasta problema, fi sigur ca folosesti `sudo -H`:
-
-~~~bash
-$ sudo -H npm install -g meteorite
-~~~
-
-Poti citi mai multe despre aceasta problema in [documentatia Meteorite](https://github.com/oortcloud/meteorite/blob/master/README.md#permission-woes).
+Poti urmari acel ghid pentru a instala Meteor, apoi parcurge cartea incepand cu capitolul "Creeaza o simpla apliatie".
 
 <% end %>
 
-Asta este! Meteorite isi va face treaba de aici incolo.
+### Crearea unei aplicatii simple
 
-Nota: Meteorite inca nu are suport pentru Windows, dar in schimb te poti uita pe [tutorialul nostru de windows](http://themeteorbook.com/2013/03/20/using-meteor-and-atmopshere-on-windows/).
-
-<% note do %>
-
-  ### `mrt` vs `meteor`
-  
-Meteorite instaleaza executabilul `mrt`, pe care il vom folosi pentru a instala pachete in aplicatie. Cand vom rula serverul, totusi, vom folosi comanda `meteor`.
-  
-<% end %>
-
-### Crearea unei simple aplicatii
-
-Acum ca avem instalat Meteorite, sa cream o aplicatie. Pentru a face asta vom folosi comanda `mrt`:
+Acum ca avem instalat Meteor, sa cream o aplicatie. Pentru a face asta vom folosi comanda `meteor`:
 
 ~~~bash
-$ mrt create microscope
+$ meteor create microscope
 ~~~
 
 Aceasta comanda va descarca Meteor, si va configura un simplu proiect pentru tine. Cand este gata, vei putea vedea un director, `microscope/`, continand urmatoarele:
 
 ~~~bash
-microscope.css  
-microscope.html 
-microscope.js   
-smart.json 
+microscope.css
+microscope.html
+microscope.js
+smart.json
 ~~~
 
 Aplicatie pe care Meteor a creat-o pentru tine este un simplu sablon demonstrand cateva simple modele de lucru.
@@ -100,7 +55,7 @@ $ cd microscope
 $ meteor
 ~~~
 
-Acum in browser acceseaza adresa `http://localhost:3000/` (sau echivalentul `http://0.0.0.0:3000/`) si vei putea vedea ceva de genul asta: 
+Acum in browser acceseaza adresa `http://localhost:3000/` (sau echivalentul `http://0.0.0.0:3000/`) si vei putea vedea ceva de genul asta:
 
 <%= screenshot "2-1", "Meteor's Hello World." %>
 
@@ -108,12 +63,22 @@ Acum in browser acceseaza adresa `http://localhost:3000/` (sau echivalentul `htt
 
 Felicitari! Ai rulat prima ta aplicatie Meteor. Apropo, pentru a opri aplicatia trebuie sa accesezi fereastra terminal de unde ai rulat Meteor si sa apesi `ctrl+c`.
 
+<% note do %>
+
+### La revedere Meteorite
+
+Obișnuia să fie o vreme când Meteor se baza pe un manager extern de pachete numit Meteorite. De la versiunea 0.9.0, Meteorite nu mai este necesar deoarece funcțiile sale au fost asimilate de pachetul de bază Meteor.
+
+Așa că dacă întâlnești referințe spre comanda `mrt` prin carte sau pe internet, poți să o substitui fără probleme cu `meteor`.
+
+<% end %>
+
 ### Adauga un pachet
 
 In continuare vom folosi Meteorite pentru a adauga pachetul [Bootstrap](http://getbootstrap.com/) aplicatiei create:
 
 ~~~bash
-$ mrt add bootstrap
+$ meteor add bootstrap
 ~~~
 
 <%= commit "2-2", "Added bootstrap package." %>
@@ -125,16 +90,16 @@ $ mrt add bootstrap
 Cand vorbim despre pachete in contextul Meteor, este bine sa fim specifici. Meteor foloseste cinci tipuri de pachete de baza:
 
 - Codul principal Meteor este impartit diferite **pachete nucleu**. Ele sunt incluse in fiecare aplicatie Meteor, si nu le vei purta niciodata girja
-- **pachetele destepte** sunt un grup de [aproape 37 de pachete](http://docs.meteor.com/#packages) (poti vedea lista intreaga cu `meteor list`) care vin odata cu Meteor si pe care optional le poti importa in aplicatia ta. Le poti importa chiar daca nu folosesti Meteorite, folosind comanda `meteor add numepachet`.
-- **pachete locale** sunt pachete create de tine si care se gasesc in directorul `/packages`. Nu iti trebuie Meteorite pentru a le putea folosi.
-- **pachetele destepte Atmosphere** sunt pachete de la terti listate pe [Atmosphere](http://atmosphere.meteor.com). Meteorite este necesar pentru a le folosi si importa.
+- **pachetele destepte** sunt un grup de [aproape 37 de pachete](http://docs.meteor.com/#packages) (poti vedea lista intreaga cu `meteor list`) care vin odata cu Meteor si pe care optional le poti importa in aplicatia ta folosind comanda `meteor add numepachet`.
+- **pachete locale** sunt pachete create de tine si care se gasesc in directorul `/packages`.
+- **pachetele inteligente Atmosphere** sunt pachete de la terti listate pe [Atmosphere](http://atmosphere.meteor.com).
 - **pachete NPM** (Node Packaged Modules) sunt pachete ale Node.js. Desi ele nu merg din prima folosite in Meteor, ele pot fi folosite de pachetele anterioare.
 
 <% end %>
 
 ### Structura de fisiere a unei aplicatii Meteor
 
-Inainte de a incepe sa programam, avem nevoie sa configuram proiectul cum trebuie. Pentru a ne asigura ca avem o constructie curata, deschide directorul `microscope` si sterge fisierul `microscope.html`, `microscope.js`, si `microscope.css`. 
+Inainte de a incepe sa programam, avem nevoie sa configuram proiectul cum trebuie. Pentru a ne asigura ca avem o constructie curata, deschide directorul `microscope` si sterge fisierul `microscope.html`, `microscope.js`, si `microscope.css`.
 
 In continuare, creeaza cinci directoare in cadrul `/microscope`: `/client`, `/server`, `/public`, `/lib`, si `/collections`, si deasemenea creaza fisierele goale numite `main.html` si `main.js` in interiorul directorului `/client`. Nu-ti fa griji daca aplicatia nu merge, vom incepe sa populam fisierele in capitolul urmator.
 
@@ -291,7 +256,6 @@ body {
 
 In aceasta carte vom scrie in pur JavaScript. Dar daca preferi CoffeeScript, Meteor te are acoperit. Pur si simplu adauga pachetul CoffeeScript si vei putea incepe:
 
-
-`mrt add coffeescript`
+`meteor add coffeescript`
 
 <% end %>
