@@ -8,13 +8,13 @@ contents: Invata despre sistemul de dependințe reactive din Meteor.|Afla cum si
 paragraphs: 20
 ---
 
-////
+Dacă colecțiile sunt stratul de bază din Meteor, atunci *reactivitatea* este invelișul care face stratul acela sa fie folositor.
 
-////
+Colecțiile transformă în mod radical felul în care o aplicație tratează schimbările de date. În loc să fim nevoiți să verificăm schimbările de date în mod manual (de exemplu printr-un apel AJAX) și apoi să actualizăm HTML-ul, schimbările de date pot să vină de la sine în orice moment și să fie aplicate interfeței de utilizator în mod consistent prin Meteor.
 
-////
+Gândește-te așa: în spatele cortinei, Meteor poate să schimbe *orice* parte a interfeței de utilizator când o colecție adecvată este actualizată.
 
-////
+Modul *imperativ* de a face asta este prin utilizarea lui `.observe()`, o funcție cursor care apelează callback-uri când documentele care se potrivesc cu acel cursor se schimbă. Apoi putem să facem schimbări DOM-ului (HTML-ul randat de pagina noastră) prin acele callback-uri. Codul rezultat ar putea să arate în spiritul următor:
 
 ~~~js
 Posts.find().observe({
