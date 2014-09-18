@@ -37,21 +37,21 @@ Deja poți să vezi cum codul începe să devină destul de complex. Imaginează
 
 <% note do %>
 
-### When *Should* We Use `observe()`?
+### Când *ar trebui* să folosim `observe()`?
 
-////
+Folosirea metodei `observe()` este uneori necesară, mai ales atunci când folosim widgeturi străine, third-party. De exemplu, să zicem că vrem să adaugăm și să scoatem pin-uri în timp real de pe o hartă în funcție de niște date dintr-o colecție (cum ar fi, locația utilizatorilor care sunt online).
 
-////
+În astfel de cazuri, va trebui să folosești callback-urile din `observe()` pentru a face harta să `discute` cu colecția Meteor și să știm cum să reacționăm la schimbări de date. De exemplu, ar trebui să te bazezi pe apelurile de `added` și `removed` pentru a apela apoi mai departe metodele de `dropPin()` sau `removePin()` de pe harta respectivă.
 
 <% end %>
 
-### A Declarative Approach
+### O metodologie declarativă
 
-////
+Meteor ne ajută oferindu-ne o alternativă mai bună: reactivitatea, care la bază este o metodă **declarativă**. Declarativitatea acesteia ne permite să definim relațiile între obiecte o singură dată și să știm că or să fie ținute sincronizate, în loc să fim nevoiți să specificăm comportamentul pentru fiecare schimbare posibilă.
 
-////
+Asta este un concept puternic, deoarece un sistem în timp real are multe puncte de intrare a datelor care se schimbă la momente imprevizibile. Declarând în mod declarativ modul de randare al HTML-ului bazându-ne pe surse de date reactive, Meteor poate să se ocupe singur de monitorizatul surselor și să se ocupe în mod transparent de menținutul stării interfeței.
 
-////
+Toate astea pot fi rezumate în felul următor: în loc să ne gândim la callback-uri de `observe`, Meteor ne permite să scriem:
 
 ~~~html
 <template name="postsList">
@@ -63,7 +63,7 @@ Deja poți să vezi cum codul începe să devină destul de complex. Imaginează
 </template>
 ~~~
 
-////
+Și apoi să preluăm lista de postări cu:
 
 ~~~js
 Template.postsList.helpers({
