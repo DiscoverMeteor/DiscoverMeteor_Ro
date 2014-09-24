@@ -1,20 +1,20 @@
 ---
-title: Reactivity
+title: Reactivitatea
 slug: reactivity
 date: 0006/01/02
 number: 6.5
 sidebar: true
-contents: Learn about Meteor's reactive code dependency system.|Understand the motivations and how it makes code declarative.|Learn to use advanced code that uses reactive data.
+contents: Invata despre sistemul de dependințe reactive din Meteor.|Afla cum si de ce sa scrii cod declarativ.|Afla cum sa folosesti cod complex care foloseste date reactive.
 paragraphs: 20
 ---
 
-////
+Dacă colecțiile sunt stratul de bază din Meteor, atunci *reactivitatea* este invelișul care face stratul acela sa fie folositor.
 
-////
+Colecțiile transformă în mod radical felul în care o aplicație tratează schimbările de date. În loc să fim nevoiți să verificăm schimbările de date în mod manual (de exemplu printr-un apel AJAX) și apoi să actualizăm HTML-ul, schimbările de date pot să vină de la sine în orice moment și să fie aplicate interfeței de utilizator în mod consistent prin Meteor.
 
-////
+Gândește-te așa: în spatele cortinei, Meteor poate să schimbe *orice* parte a interfeței de utilizator când o colecție adecvată este actualizată.
 
-////
+Modul *imperativ* de a face asta este prin utilizarea lui `.observe()`, o funcție cursor care apelează callback-uri când documentele care se potrivesc cu acel cursor se schimbă. Apoi putem să facem schimbări DOM-ului (HTML-ul randat de pagina noastră) prin acele callback-uri. Codul rezultat ar putea să arate în spiritul următor:
 
 ~~~js
 Posts.find().observe({
@@ -33,25 +33,25 @@ Posts.find().observe({
 });
 ~~~
 
-////
+Deja poți să vezi cum codul începe să devină destul de complex. Imaginează-ți că trebuie să tratezi schimbări pe *fiecare atribut* al unei postări, și să schimbi HTML complex în `<li>`-ul postării. Ca să nu mai zic de toate cazurile ciudate care pot să apară când începem să ne bazăm pe surse multiple de informație care se pot schimba toate în timp real.
 
 <% note do %>
 
-### When *Should* We Use `observe()`?
+### Când *ar trebui* să folosim `observe()`?
 
-////
+Folosirea metodei `observe()` este uneori necesară, mai ales atunci când folosim widgeturi străine, third-party. De exemplu, să zicem că vrem să adaugăm și să scoatem pin-uri în timp real de pe o hartă în funcție de niște date dintr-o colecție (cum ar fi, locația utilizatorilor care sunt online).
 
-////
+În astfel de cazuri, va trebui să folosești callback-urile din `observe()` pentru a face harta să `discute` cu colecția Meteor și să știm cum să reacționăm la schimbări de date. De exemplu, ar trebui să te bazezi pe apelurile de `added` și `removed` pentru a apela apoi mai departe metodele de `dropPin()` sau `removePin()` de pe harta respectivă.
 
 <% end %>
 
-### A Declarative Approach
+### O metodologie declarativă
 
-////
+Meteor ne ajută oferindu-ne o alternativă mai bună: reactivitatea, care la bază este o metodă **declarativă**. Declarativitatea acesteia ne permite să definim relațiile între obiecte o singură dată și să știm că or să fie ținute sincronizate, în loc să fim nevoiți să specificăm comportamentul pentru fiecare schimbare posibilă.
 
-////
+Asta este un concept puternic, deoarece un sistem în timp real are multe puncte de intrare a datelor care se schimbă la momente imprevizibile. Declarând în mod declarativ modul de randare al HTML-ului bazându-ne pe surse de date reactive, Meteor poate să se ocupe singur de monitorizatul surselor și să se ocupe în mod transparent de menținutul stării interfeței.
 
-////
+Toate astea pot fi rezumate în felul următor: în loc să ne gândim la callback-uri de `observe`, Meteor ne permite să scriem:
 
 ~~~html
 <template name="postsList">
@@ -63,7 +63,7 @@ Posts.find().observe({
 </template>
 ~~~
 
-////
+Și apoi să preluăm lista de postări cu:
 
 ~~~js
 Template.postsList.helpers({
@@ -73,23 +73,23 @@ Template.postsList.helpers({
 });
 ~~~
 
-////
+În spatele cortinei, Meteor ne conectează în mod automat callback-urile de `observe()`, și redesenează părțile relevante din interfață când datele reactive din spate schimbă.
 
-### Dependency Tracking in Meteor: Computations
+### Computațiile, Metode de Management al Dependințelor
 
-////
+Chiar dacă Meteor este un framework reactiv, în timp real, nu *toate* datele dintr-o aplicație Meteor sunt reactive. Dacă acesta ar fi fost cazul, toată aplicația ar trebui repornită de fiecare dată când s-ar schimba ceva. În loc de asta, reactivitatea este limitată în anumite zone specifice din cod, pe care le numim *computații*.
 
-////
+Cu alte cuvinte, o computație este un bloc de cod care se re-rulează de fiecare dată când o sursă de date reactivă de care depinde se schimbă. Dacă ai o sursă de date reactivă (de exemplu, o variabilă de Session) și ai dori să răspunzi reactiv la schimbări din partea ei, o să trebuiască să inițializezi o computație.
 
-////
+De reținut că de regulă nu ai nevoie să faci asta în mod explicit pentru că implicit, Meteor deja randează fiecare template cu o computație (ceea ce înseamnă că dacă ai cod în helpere de template-uri, acesta o să fie reactiv fără să mai faci nimic).
 
-////
+Toate sursele de date reactive își urmăresc computațiile care depind de acestea ca să le informeze de eventuale schimbări. Ca să facă asta, se apelează metoda `invalidate()` pe computație.
 
-////
+Computațiile în general sunt configurate ca să își re-evalueze pur și simplu tot conținutul atunci când se produce o invalidare, ceea ce e și ce se întâmplă atunci când ai computații în template-uri (deși computațiile de template-uri mai fac niște magie adițională ca să încerce să redeseneze pagina în mod mai eficient). Deși poți avea mai mult control asupra a ce face o computație la invalidare dacă ai nevoie, în practică aproape întotdeauna vei folosi comportamentul implicit.
 
-### Setting Up a Computation
+### Crearea unei Computații
 
-////
+Acum că înțelegem teoria din spatele computațiilor, crearea uneia este dispoporțional de simplu. Pur și simplu apelăm funcția `Deps.autorun` pasându-i ca argument un bloc de cod:
 
 ~~~js
 Deps.autorun(function() {
@@ -97,11 +97,13 @@ Deps.autorun(function() {
 });
 ~~~
 
-////
+De reținut că rulăm codul de `Deps` în înteriorul unei funcții de `Meteor.startup()` ca să fim siguri că nu se execută decât după ce Meteor a terminat de încărcat colecția de `Posts`.
+
+În spatele cortinei, `autorun` creează o computație, și o configurează ca să se re-evalueaze de fiecare dată când sursa de date din interior se schimbă. Aici am configurat o computație care pur și simplu afișează în consolă numărul de postări. Deoarece `Posts.find()` este o sursă de date reactivă, o să se ocupe singură de informat computația când este necesar să se re-evalueze, adică atunci când se schimbă numărul de postări.
 
 ~~~js
 > Posts.insert({title: 'New Post'});
 There are 4 posts.
 ~~~
 
-////
+Rezultatul final este că putem să scriem cod care depinde de surse de date reactive într-un mod foarte natural, știind că sistemul de dependințe se va ocupa cu rerularea acestuia la momentul potrivit.
